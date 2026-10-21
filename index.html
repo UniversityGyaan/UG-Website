@@ -71,6 +71,9 @@ select,input[type=search]{width:100%;min-height:48px;padding:10px 12px;border-ra
 .post .btn{min-height:38px;font-size:14px;padding:0 14px}
 .more{display:block;margin:16px auto;min-height:46px;padding:0 28px;border-radius:12px;border:1px solid var(--acct);background:none;color:var(--acct);cursor:pointer;font-size:15px;font-weight:600}
 .ytg{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}.ytc{display:flex;flex-direction:column;gap:4px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;text-decoration:none;box-shadow:var(--sh)}.ytc:hover{border-color:var(--blue)}.ytc span{color:var(--mu);font-size:14px}.ytc em{font-style:normal;color:var(--acct);font-weight:600;font-size:14px;margin-top:auto}
+.un{display:block;font-weight:800;font-size:15.5px;line-height:1.35;color:hsl(var(--h,220) 72% 36%)}
+:root[data-theme="dark"] .un{color:hsl(var(--h,220) 85% 72%)}
+.un.cu,:root[data-theme="dark"] .un.cu{color:var(--cc)}
 .empty{grid-column:1/-1;text-align:center;color:var(--mu);padding:34px 12px;background:var(--card);border:1px dashed var(--bd);border-radius:14px}
 .sk{height:120px;border-radius:14px;background:linear-gradient(90deg,var(--card),var(--card2),var(--card));background-size:200% 100%;animation:sh 1.2s infinite}
 @keyframes sh{to{background-position:-200% 0}}
@@ -191,10 +194,14 @@ function adBox(id,slot){const el=$(id);if(!el||!CFG.adClient||!slot)return;el.cl
   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}}
 
 async function load(){
-  try{const r=await fetch(CFG.db+"/web/posts.json");if(!r.ok)throw 0;const o=await r.json()||{};P=Object.entries(o).map(([k,v])=>({id:k,...v}))}catch(e){P=DEMO}
+  try{const [r,n]=await Promise.all([fetch(CFG.db+"/web/posts.json"),fetch(CFG.db+"/web/names.json").catch(()=>null)]);if(!r.ok)throw 0;const o=await r.json()||{};let NM={};try{NM=n&&n.ok?(await n.json())||{}:{}}catch(e){}
+  const mp={};Object.values(NM).forEach(m=>m&&m.f&&(mp[m.f]=m));
+  P=Object.entries(o).map(([k,v])=>({id:k,...v})).filter(p=>!p.hide).map(p=>{const m=mp[p.uni];if(m){if(m.t)p.uni=m.t;if(m.c)p.cat=m.c;if(/^#[0-9a-f]{6}$/i.test(m.k||""))p.col=m.k}return p})}catch(e){P=DEMO}
   if(!P.length)P=DEMO;
-  P.sort((a,b)=>(b.date||"").localeCompare(a.date||"")||(b.ts||0)-(a.ts||0));P.forEach((p,i)=>p._i=i);
+  P.sort((a,b)=>(b.pin?1:0)-(a.pin?1:0)||(b.date||"").localeCompare(a.date||"")||(b.ts||0)-(a.ts||0));P.forEach((p,i)=>p._i=i);
 }
+const hue=s=>{let h=0;for(const c of String(s||""))h=(h*31+c.charCodeAt(0))%360;return h};
+const unTag=p=>`<span class="un${p.col?" cu":""}" style="--h:${hue(p.uni)}${p.col?";--cc:"+p.col:""}">${esc(p.uni||"")}</span>`;
 const sel=()=>P.filter(p=>(!S.cat||p.cat===S.cat)&&(!S.uni||p.uni===S.uni));
 const fmt=d=>{if(!d)return"";const x=new Date(d+"T00:00:00");return isNaN(x)?d:x.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})};
 const left=d=>Math.round((new Date(d+"T00:00:00")-new Date(todayS+"T00:00:00"))/864e5);
@@ -210,9 +217,9 @@ function render(){
   $("ttl").textContent=S.uni?S.uni+" · नए अपडेट":"नए अपडेट";$("cnt").textContent=rows.length+" updates";
   let h="";rows.slice(0,S.n).forEach((p,i)=>{
     const isNew=(now/1000-(p.ts||0))<172800,dl=p.deadline?left(p.deadline):null,u=fixU(p.url);
-    h+=`<article class="post" tabindex="0" role="button" data-i="${i}"><div class="row"><span class="b">${esc(TYPES[p.type]||"Notice")}</span>${isNew?'<span class="b new">NEW</span>':""}${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))}</span>`:""}</div>
-    <h3>${esc(p.title)}</h3>${p.desc?`<p>${esc(p.desc)}</p>`:""}
-    <div class="meta"><span>${esc(p.uni||"")} · ${esc(fmt(p.date))}</span>${u?`<a class="btn" target="_blank" rel="noopener" href="${esc(u)}">खोलिए</a>`:'<span>विवरण देखें ›</span>'}</div></article>`;
+    h+=`<article class="post" tabindex="0" role="button" data-i="${i}"><div class="row"><span class="b">${esc(TYPES[p.type]||"Notice")}</span>${p.pin?'<span class="b">📌 Pinned</span>':""}${isNew?'<span class="b new">NEW</span>':""}${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))}</span>`:""}</div>
+    ${unTag(p)}<h3>${esc(p.title)}</h3>${p.desc?`<p>${esc(p.desc)}</p>`:""}
+    <div class="meta"><span>${esc(fmt(p.date))}</span>${u?`<a class="btn" target="_blank" rel="noopener" href="${esc(u)}">खोलिए</a>`:'<span>विवरण देखें ›</span>'}</div></article>`;
     if((i+1)%6===0)h+=`<div class="ad" id="ad-f${i}"><small>विज्ञापन</small></div>`});
   $("feed").innerHTML=h||'<div class="empty">इस चयन के लिए अभी कोई अपडेट नहीं है।<br>जल्द ही नया आएगा — Telegram से जुड़े रहिए।</div>';
   rows.slice(0,S.n).forEach((p,i)=>(i+1)%6===0&&adBox("ad-f"+i,CFG.slots.feed));
@@ -228,7 +235,7 @@ function render(){
 let lastFocus=null;
 function openM(p){lastFocus=document.activeElement;const u=fixU(p.url),dl=p.deadline?left(p.deadline):null;
   $("mb").innerHTML=`<span class="b">${esc(TYPES[p.type]||"Notice")}</span>${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))} (${dl===0?"आज":dl+" दिन बाकी"})</span>`:""}`;
-  $("mt").textContent=p.title;$("mm").textContent=(p.uni||"")+" · "+fmt(p.date);$("mp").textContent=p.desc||"";
+  $("mt").textContent=p.title;$("mm").innerHTML=unTag(p)+esc(fmt(p.date));$("mp").textContent=p.desc||"";
   $("mo").hidden=!u;$("mn").hidden=!!u;if(u){$("mo").href=u;$("mc").onclick=async()=>{try{await navigator.clipboard.writeText(u);$("mc").textContent="✅ कॉपी हो गया"}catch(e){prompt("Link कॉपी कीजिए:",u)}}}
   $("mc").hidden=!u;$("mc").textContent="🔗 Link कॉपी";
   $("mw").href="https://wa.me/?text="+encodeURIComponent(p.title+"\n"+(u||location.href)+"\n— University Gyaan");
