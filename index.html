@@ -83,8 +83,8 @@ aside h3{margin:0 0 8px;font-size:16px}
 @keyframes sc{to{transform:translateY(-50%)}}
 .rem li{padding:9px 0;border-bottom:1px solid var(--bd);font-size:13.5px;cursor:pointer}.rem small{display:block;color:var(--mu)}
 .left{display:inline-block;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--red);color:#fff;margin-right:6px}.left.ok{background:var(--grn)}
-.ad{grid-column:1/-1;margin:8px 0;text-align:center;min-height:100px;background:var(--card2);border:1px dashed var(--bd);border-radius:10px;padding:4px;overflow:hidden}
-.ad small{display:block;color:var(--mu);font-size:10px;letter-spacing:1px}
+.ad{display:none;grid-column:1/-1;margin:8px 0;text-align:center;min-height:100px;background:var(--card2);border:1px dashed var(--bd);border-radius:10px;padding:4px;overflow:hidden}
+.ad.on{display:block}.ad small{display:block;color:var(--mu);font-size:10px;letter-spacing:1px}
 aside .ad{min-height:260px}
 .lms{background:linear-gradient(135deg,#1b2f78,#0e1732)!important;color:#fff}.lms p{color:#c5d0f0!important}
 .soc{display:flex;flex-wrap:wrap;gap:8px}.soc a{background:var(--card2);padding:0 14px;min-height:40px;display:inline-flex;align-items:center;border-radius:10px;font-size:14px;text-decoration:none}
@@ -105,6 +105,8 @@ footer a{margin:0 8px;color:var(--mu);line-height:2.2}
 @media(max-width:360px){.brand small{display:none}.cta{padding:0 10px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rem{overflow:auto}}
 </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386"
+     crossorigin="anonymous"></script>
 </head>
 <body>
 <header><div class="nav">
@@ -161,7 +163,7 @@ footer a{margin:0 8px;color:var(--mu);line-height:2.2}
 const CFG={
   db:"https://university-notice-bot-default-rtdb.asia-southeast1.firebasedatabase.app",
   lms:"https://university-gyaan-lms.onrender.com",
-  adClient:"",slots:{top:"",bot:"",side:"",feed:""},
+  adClient:"ca-pub-9281139746143386",slots:{top:"",bot:"",side:"",feed:""},
   links:{Telegram:"https://t.me/Univesity_Gyaan",YouTube:"https://youtube.com/@university_gyaan",Instagram:"https://instagram.com/universitygyaan",Support:"https://universitygyaansupport.netlify.app/student.html",Join:"https://universitygyaan.github.io/Join-Us/"},
   wa:"https://whatsapp.com/channel/0029Va8mCyHDuMRolLgWPM2S"
 };
@@ -184,10 +186,9 @@ theme(document.documentElement.dataset.theme||"dark");
 $("tg").onclick=()=>{const t=document.documentElement.dataset.theme==="dark"?"light":"dark";theme(t);try{localStorage.setItem("ug_theme",t)}catch(e){}};
 
 /* ads */
-function adBox(id,slot){const el=$(id);if(!el||!CFG.adClient||!slot)return;
+function adBox(id,slot){const el=$(id);if(!el||!CFG.adClient||!slot)return;el.classList.add("on");
   el.insertAdjacentHTML("beforeend",`<ins class="adsbygoogle" style="display:block" data-ad-client="${CFG.adClient}" data-ad-slot="${slot}" data-ad-format="auto" data-full-width-responsive="true"></ins>`);
   try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}}
-if(CFG.adClient){const s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+CFG.adClient;document.head.appendChild(s)}
 
 async function load(){
   try{const r=await fetch(CFG.db+"/web/posts.json");if(!r.ok)throw 0;const o=await r.json()||{};P=Object.entries(o).map(([k,v])=>({id:k,...v}))}catch(e){P=DEMO}
