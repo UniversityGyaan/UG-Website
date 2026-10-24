@@ -87,9 +87,10 @@ h1{margin:4px 0 0;display:inline-block;max-width:100%;font-size:clamp(34px,8.6vw
 .tag{margin:14px auto 0;max-width:520px;color:var(--mu);font-size:clamp(14.5px,3.5vw,17px);line-height:1.65}
 
 /* cards */
-.cards{width:100%;max-width:1060px;margin:clamp(26px,5vh,44px) auto 0;display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.cards{width:100%;max-width:1180px;margin:clamp(26px,5vh,44px) auto 0;display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
 @media(min-width:640px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:1000px){.cards{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
+@media(min-width:640px) and (max-width:1099px){.tile:last-child:nth-child(odd){grid-column:1/-1}}
+@media(min-width:1100px){.cards{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}}
 .tile{display:block}
 .card{
   --rx:0deg;--ry:0deg;--mx:50%;--my:30%;
@@ -121,9 +122,10 @@ h1{margin:4px 0 0;display:inline-block;max-width:100%;font-size:clamp(34px,8.6vw
 .c-up{--c1:#1d4ed8;--c2:#0891b2;--c3:#7c3aed;--glow:rgba(37,99,235,.65);--sd:.4s}
 .c-st{--c1:#6d28d9;--c2:#db2777;--c3:#f43f5e;--glow:rgba(192,38,211,.55);--sd:1.8s}
 .c-sh{--c1:#c2410c;--c2:#dc2626;--c3:#f59e0b;--glow:rgba(234,88,12,.55);--sd:3.2s}
+.c-so{--c1:#0369a1;--c2:#7c3aed;--c3:#ec4899;--glow:rgba(124,58,237,.55);--sd:3.9s}
 .c-ct{--c1:#047857;--c2:#0d9488;--c3:#2563eb;--glow:rgba(13,148,136,.55);--sd:4.6s}
 /* desktop: stacked layout inside each card */
-@media(min-width:1000px){
+@media(min-width:1100px){
   .card{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"i a" "t t";align-items:start;row-gap:30px;padding:18px 18px 20px;min-height:176px}
   .ico{grid-area:i}.arr{grid-area:a}.txt{grid-area:t;align-self:start}
   .txt h2{font-size:18px}.txt p{font-size:13px;margin-top:4px}
@@ -194,6 +196,14 @@ footer{border-top:1px solid var(--bd);background:var(--hd);backdrop-filter:blur(
       </a>
     </div>
     <div class="tile rv" style="--d:.26s">
+      <a class="card c-so" href="social.html" data-tilt>
+        <div class="fx" aria-hidden="true"><div class="mesh"></div><div class="glare"></div><div class="shine"></div></div>
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></span>
+        <span class="txt"><h2>Social Media</h2><p>Join us on Various Social Media</p></span>
+        <span class="arr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+      </a>
+    </div>
+    <div class="tile rv" style="--d:.33s">
       <a class="card c-ct" href="contact.html" data-tilt>
         <div class="fx" aria-hidden="true"><div class="mesh"></div><div class="glare"></div><div class="shine"></div></div>
         <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m22 7-10 6L2 7"/></svg></span>
@@ -205,14 +215,14 @@ footer{border-top:1px solid var(--bd);background:var(--hd);backdrop-filter:blur(
 </main>
 
 <footer>
-  <div class="fl"><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div>
+  <div class="fl"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div>
   <p class="copy">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
 </footer>
 
 <script>
 (function(){
   "use strict";
-  var CFG={lms:"https://lms.universitygyaan.in",join:"https://join.universitygyaan.in/"};
+  var CFG={lms:"https://lms.universitygyaan.in",join:"https://universitygyaan.github.io/SendNotice/"};
   var $=function(id){return document.getElementById(id)};
   var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
   var fine=matchMedia("(hover:hover) and (pointer:fine)").matches;
