@@ -97,6 +97,16 @@ footer{border-top:1px solid var(--bd);padding:22px 14px;text-align:center;color:
 footer a{margin:0 8px;color:var(--mu);line-height:2.2}
 .md{position:fixed;inset:0;z-index:60;background:#000a;display:flex;align-items:flex-end;justify-content:center}
 .md[hidden]{display:none}
+.vw{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column}
+.vw[hidden]{display:none}
+.vhd{display:flex;gap:8px;align-items:center;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--hd);border-bottom:1px solid var(--bd)}
+.vhd span{flex:1;min-width:0;font-weight:700;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vhd .btn{min-height:40px;font-size:14px;padding:0 12px;flex:none}
+.vhd .x2{width:40px;height:40px;flex:none;border-radius:50%;border:0;background:var(--card2);color:var(--tx);font-size:18px;cursor:pointer}
+.vbd{flex:1;overflow:auto;padding:10px;-webkit-overflow-scrolling:touch}
+.vbd img{max-width:100%;height:auto;display:block;margin:0 auto 12px;border-radius:8px;box-shadow:var(--sh);background:#fff}
+.vbd iframe{width:100%;height:100%;min-height:75vh;border:0;border-radius:8px;background:#fff}
+.vm{color:var(--mu);text-align:center;padding:18px 8px;font-size:15px}
 .sheet{position:relative;background:var(--card);width:100%;max-width:560px;max-height:88vh;overflow:auto;border-radius:20px 20px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom,0px));animation:up .2s ease-out}
 @keyframes up{from{transform:translateY(40px);opacity:0}}
 .sheet h3{margin:10px 0 6px;font-size:19px;line-height:1.4;padding-right:34px}
@@ -167,6 +177,7 @@ footer a{margin:0 8px;color:var(--mu);line-height:2.2}
   <p>Notices official university/college websites से ली जाती हैं। सही जानकारी के लिए official site ज़रूर देखें।<br>© 2026 University Gyaan (by Sanjeev Chauhan) · Hapur</p>
 </footer>
 
+<div class="vw" id="vw" hidden role="dialog" aria-modal="true" aria-labelledby="vt"><div class="vhd"><span id="vt"></span><a class="btn alt" id="vd" rel="noopener">⬇️ Download</a><button class="x2" id="vx" aria-label="बंद करें">✕</button></div><div class="vbd" id="vb"></div></div>
 <div class="md" id="md" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mt">
   <button class="x" id="mx" aria-label="बंद करें">✕</button>
   <div class="row" id="mb"></div><h3 id="mt"></h3><div class="meta" id="mm"></div><p id="mp"></p>
@@ -186,6 +197,7 @@ const CFG={
 const TYPES={"":"सब",notice:"Notice",result:"Result",datesheet:"Datesheet",admit:"Admit Card",form:"Exam Form",study:"Study Material",video:"Videos",other:"Other"};
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fixU=u=>{u=String(u||"").trim();return /^https?:\/\//i.test(u)?u:/^\/\//.test(u)?"https:"+u:/^www\./i.test(u)?"https://"+u:""};
+const isC=u=>{try{return new URL(u).hostname==="res.cloudinary.com"}catch(e){return false}};
 const iso=d=>d.toISOString().slice(0,10),now=Date.now(),todayS=iso(new Date()),ago=n=>Math.floor((now-n*864e5)/1000);
 const DEMO=[
  {title:"परीक्षा फॉर्म भरने की अंतिम तिथि बढ़ाई गई",url:"https://example.com",date:todayS,ts:ago(0),uni:"CCS University",cat:"university",type:"form",deadline:iso(new Date(now+4*864e5))},
@@ -232,7 +244,7 @@ function render(){
     const isNew=(now/1000-(p.ts||0))<172800,dl=p.deadline?left(p.deadline):null,u=fixU(p.url);
     h+=`<article class="post" tabindex="0" role="button" data-i="${i}"><div class="row"><span class="b">${esc(TYPES[p.type]||"Notice")}</span>${p.pin?'<span class="b">📌 Pinned</span>':""}${isNew?'<span class="b new">NEW</span>':""}${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))}</span>`:""}</div>
     ${unTag(p)}<h3>${esc(p.title)}</h3>${p.desc?`<p>${esc(p.desc)}</p>`:""}
-    <div class="meta"><span>${esc(fmt(p.date))}</span>${u?`<a class="btn" target="_blank" rel="noopener" href="${esc(u)}">खोलिए</a>`:'<span>विवरण देखें ›</span>'}</div></article>`;
+    <div class="meta"><span>${esc(fmt(p.date))}</span>${u?`<a class="btn" target="_blank" rel="noopener" href="${esc(u)}"${isC(u)?' data-view="1"':""}>खोलिए</a>`:'<span>विवरण देखें ›</span>'}</div></article>`;
     if((i+1)%6===0)h+=`<div class="ad" id="ad-f${i}"><small>विज्ञापन</small></div>`});
   $("feed").innerHTML=h||'<div class="empty">इस चयन के लिए अभी कोई अपडेट नहीं है।<br>जल्द ही नया आएगा — Telegram से जुड़े रहिए।</div>';
   rows.slice(0,S.n).forEach((p,i)=>(i+1)%6===0&&adBox("ad-f"+i,CFG.slots.feed));
@@ -249,11 +261,32 @@ let lastFocus=null;
 function openM(p){lastFocus=document.activeElement;const u=fixU(p.url),dl=p.deadline?left(p.deadline):null;
   $("mb").innerHTML=`<span class="b">${esc(TYPES[p.type]||"Notice")}</span>${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))} (${dl===0?"आज":dl+" दिन बाकी"})</span>`:""}`;
   $("mt").textContent=p.title;$("mm").innerHTML=unTag(p)+esc(fmt(p.date));$("mp").textContent=p.desc||"";
-  $("mo").hidden=!u;$("mn").hidden=!!u;if(u){$("mo").href=u;$("mc").onclick=async()=>{try{await navigator.clipboard.writeText(u);$("mc").textContent="✅ कॉपी हो गया"}catch(e){prompt("Link कॉपी कीजिए:",u)}}}
+  const su=u&&isC(u)?location.origin+"/notices.html":u;
+  $("mo").hidden=!u;$("mn").hidden=!!u;if(u){$("mo").href=u;if(isC(u))$("mo").setAttribute("data-view","1");else $("mo").removeAttribute("data-view");$("mc").onclick=async()=>{try{await navigator.clipboard.writeText(su);$("mc").textContent="✅ कॉपी हो गया"}catch(e){prompt("Link कॉपी कीजिए:",su)}}}
   $("mc").hidden=!u;$("mc").textContent="🔗 Link कॉपी";
-  $("mw").href="https://wa.me/?text="+encodeURIComponent(p.title+"\n"+(u||location.href)+"\n— University Gyaan");
+  $("mw").href="https://wa.me/?text="+encodeURIComponent(p.title+"\n"+(su||location.href)+"\n— University Gyaan");
   $("md").hidden=false;document.body.style.overflow="hidden";$("mx").focus()}
 function closeM(){$("md").hidden=true;document.body.style.overflow="";lastFocus&&lastFocus.focus&&lastFocus.focus()}
+/* file viewer: Cloudinary ki file website ke andar hi khulti hai (address bar me Cloudinary nahi dikhta) */
+function pageSrc(clean,n){return clean.replace("/upload/","/upload/pg_"+n+",f_jpg,q_auto/").replace(/\.pdf$/i,".jpg")}
+function loadPages(clean,body,n){
+  if(n>40){const m=document.createElement("p");m.className="vm";m.textContent="बाक़ी Pages के लिए ऊपर Download दबाइए।";body.appendChild(m);return}
+  const im=new Image();im.alt="Page "+n;
+  im.onload=()=>{body.appendChild(im);loadPages(clean,body,n+1)};
+  im.onerror=()=>{if(n===1){body.innerHTML='<iframe title="Notice" src="'+clean+'"></iframe><p class="vm">अगर File यहाँ नहीं दिख रही, तो ऊपर Download दबाइए।</p>'}};
+  im.src=pageSrc(clean,n)}
+let vLast=null;
+function openV(u,title){
+  vLast=document.activeElement;const clean=u.split("?")[0],body=$("vb");body.innerHTML="";
+  $("vt").textContent=title||"Notice";$("vd").href=u.replace("/upload/","/upload/fl_attachment/");
+  if(/\.pdf$/i.test(clean))loadPages(clean,body,1);
+  else{const im=new Image();im.alt=title||"Notice";im.onerror=()=>{body.innerHTML='<p class="vm">File नहीं खुल पाई। ऊपर Download दबाइए।</p>'};im.src=u;body.appendChild(im)}
+  $("vw").hidden=false;document.body.style.overflow="hidden";$("vx").focus()}
+function closeV(){$("vw").hidden=true;$("vb").innerHTML="";document.body.style.overflow=$("md").hidden?"":"hidden";vLast&&vLast.focus&&vLast.focus()}
+$("vx").onclick=closeV;
+document.addEventListener("click",e=>{const a=e.target.closest("a[data-view]");if(!a)return;e.preventDefault();e.stopPropagation();
+  const c=a.closest(".post");openV(a.getAttribute("href"),c?c.querySelector("h3").textContent:$("mt").textContent)},true);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("vw").hidden)closeV()});
 $("mx").onclick=closeM;$("md").onclick=e=>{if(e.target===$("md"))closeM()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("md").hidden)closeM()});
 const act=(e,fn)=>{if(e.type==="keydown"&&e.key!=="Enter"&&e.key!==" ")return;if(e.target.closest("a"))return;e.preventDefault();fn()};
