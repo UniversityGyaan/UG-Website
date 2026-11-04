@@ -72,6 +72,7 @@ footer a{margin:0 7px;color:var(--mu);text-decoration:none;line-height:2.2}foote
 @media(max-width:420px){.lnk{padding:9px 10px;font-size:13px}.brand b{font-size:15px}.brand img{width:34px;height:34px}.nav{padding:0 12px}}
 @media(max-width:380px){.brand small{display:none}.two{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.pv{display:block;width:100%;max-width:100%;border:0;border-radius:12px;margin:14px 0;background:rgba(127,127,127,.12)}iframe.pv{height:72vh;min-height:420px}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
 </head>
@@ -104,6 +105,7 @@ var TYPES={notice:"Notice",result:"Result",datesheet:"Datesheet",admit:"Admit Ca
 var $=function(i){return document.getElementById(i)};
 var esc=function(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})};
 var fixU=function(u){u=String(u||"").trim();return /^https?:\/\//i.test(u)?u:/^\/\//.test(u)?"https:"+u:/^www\./i.test(u)?"https://"+u:""};
+var own=function(p){var f=fixU(p&&p.file_url);if(f)return f;var u=fixU(p&&p.url);return /^https?:\/\/(www\.)?(t\.me|telegram\.me|telegram\.dog)\//i.test(u)?"":u};
 var iso=function(d){return d.toISOString().slice(0,10)},todayS=iso(new Date());
 var fmt=function(d){if(!d)return"";var x=new Date(d+"T00:00:00");return isNaN(x)?d:x.toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"})};
 var left=function(d){return Math.round((new Date(d+"T00:00:00")-new Date(todayS+"T00:00:00"))/864e5)};
@@ -138,7 +140,7 @@ Promise.all([
 });
 
 function render(p,raw,mp){
-  var u=fixU(p.url),dl=p.deadline?left(p.deadline):null,isNew=(Date.now()/1000-(p.ts||0))<172800;
+  var u=own(p),dl=p.deadline?left(p.deadline):null,isNew=(Date.now()/1000-(p.ts||0))<172800;
   document.title=p.title+" – University Gyaan";
   var md=document.querySelector('meta[name=description]');if(md)md.content=(p.uni?p.uni+": ":"")+p.title;
   var h='<article class="card"><div class="row"><span class="b">'+esc(TYPES[p.type]||"Notice")+'</span>'+(isNew?'<span class="b new">NEW</span>':"")+(dl!==null&&dl>=0?'<span class="b dl">अंतिम तिथि '+esc(fmt(p.deadline))+'</span>':"")+'</div>'
@@ -146,7 +148,8 @@ function render(p,raw,mp){
    +'<h1>'+esc(p.title)+'</h1><div class="meta">'+(p.date?esc(fmt(p.date)):"")+'</div>'
    +(dl!==null&&dl>=0?'<div class="cnt'+(dl>5?" ok":"")+'">⏰ अंतिम तिथि में <b>'+(dl===0?"आज आख़िरी दिन है":dl+" दिन बाकी हैं")+'</b></div>':"")
    +(p.desc?'<p class="desc">'+esc(p.desc)+'</p>':"")
-   +'<div class="ad" id="ad-top"><small>विज्ञापन</small></div>'
+   +(p.file_prev&&fixU(p.file_prev)?(p.file_type==="image"?'<img class="pv" loading="lazy" alt="'+esc(p.title)+'" src="'+esc(fixU(p.file_prev))+'">':'<iframe class="pv pdf" loading="lazy" title="'+esc(p.title)+'" src="'+esc(fixU(p.file_prev))+'"></iframe>'):"")
+    +'<div class="ad" id="ad-top"><small>विज्ञापन</small></div>'
    +'<div class="act">'
    +(u?'<a class="btn pri" id="open" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Notice खोलिए (Official Link)</a>':'<div class="cnt">इस notice का सीधा link उपलब्ध नहीं है। कृपया University की official website देखिए।</div>')
    +'<div class="two"><a class="btn" id="wa" target="_blank" rel="noopener noreferrer" href="#">WhatsApp पर शेयर</a><button class="btn" id="cp" type="button">Link कॉपी</button></div>'
