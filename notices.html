@@ -170,7 +170,7 @@ footer a{margin:0 8px;color:var(--mu);line-height:2.2}
 <div class="md" id="md" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mt">
   <button class="x" id="mx" aria-label="बंद करें">✕</button>
   <div class="row" id="mb"></div><h3 id="mt"></h3><div class="meta" id="mm"></div><p id="mp"></p>
-  <div class="note" id="mn" hidden>इस notice का सीधा link उपलब्ध नहीं है। कृपया University की official website देखिए।</div>
+  <div class="note" id="mn" hidden>इस notice का सीधा link उपलब्ध नहीं है। कृपया University की official website या हमारा Telegram channel देखिए।</div>
   <div class="acts"><a class="btn big" id="mo" target="_blank" rel="noopener">📄 Notice खोलिए</a>
   <a class="btn alt" id="mw" target="_blank" rel="noopener">WhatsApp पर शेयर</a><button class="btn alt" id="mc">🔗 Link कॉपी</button></div>
 </div></div>
@@ -186,7 +186,6 @@ const CFG={
 const TYPES={"":"सब",notice:"Notice",result:"Result",datesheet:"Datesheet",admit:"Admit Card",form:"Exam Form",study:"Study Material",video:"Videos",other:"Other"};
 const $=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fixU=u=>{u=String(u||"").trim();return /^https?:\/\//i.test(u)?u:/^\/\//.test(u)?"https:"+u:/^www\./i.test(u)?"https://"+u:""};
-const own=p=>{const f=fixU(p&&p.file_url);if(f)return f;const u=fixU(p&&p.url);return /^https?:\/\/(www\.)?(t\.me|telegram\.me|telegram\.dog)\//i.test(u)?"":u};
 const iso=d=>d.toISOString().slice(0,10),now=Date.now(),todayS=iso(new Date()),ago=n=>Math.floor((now-n*864e5)/1000);
 const DEMO=[
  {title:"परीक्षा फॉर्म भरने की अंतिम तिथि बढ़ाई गई",url:"https://example.com",date:todayS,ts:ago(0),uni:"CCS University",cat:"university",type:"form",deadline:iso(new Date(now+4*864e5))},
@@ -230,7 +229,7 @@ function render(){
   $("types").innerHTML=Object.entries(TYPES).map(([k,v])=>`<button data-t="${k}" class="${k===S.type?"on":""}">${v}</button>`).join("");
   $("ttl").textContent=S.uni?S.uni+" · नए अपडेट":"नए अपडेट";$("cnt").textContent=rows.length+" updates";
   let h="";rows.slice(0,S.n).forEach((p,i)=>{
-    const isNew=(now/1000-(p.ts||0))<172800,dl=p.deadline?left(p.deadline):null,u=own(p);
+    const isNew=(now/1000-(p.ts||0))<172800,dl=p.deadline?left(p.deadline):null,u=fixU(p.url);
     h+=`<article class="post" tabindex="0" role="button" data-i="${i}"><div class="row"><span class="b">${esc(TYPES[p.type]||"Notice")}</span>${p.pin?'<span class="b">📌 Pinned</span>':""}${isNew?'<span class="b new">NEW</span>':""}${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))}</span>`:""}</div>
     ${unTag(p)}<h3>${esc(p.title)}</h3>${p.desc?`<p>${esc(p.desc)}</p>`:""}
     <div class="meta"><span>${esc(fmt(p.date))}</span>${u?`<a class="btn" target="_blank" rel="noopener" href="${esc(u)}">खोलिए</a>`:'<span>विवरण देखें ›</span>'}</div></article>`;
@@ -247,7 +246,7 @@ function render(){
 
 /* notice detail */
 let lastFocus=null;
-function openM(p){lastFocus=document.activeElement;const u=own(p),dl=p.deadline?left(p.deadline):null;
+function openM(p){lastFocus=document.activeElement;const u=fixU(p.url),dl=p.deadline?left(p.deadline):null;
   $("mb").innerHTML=`<span class="b">${esc(TYPES[p.type]||"Notice")}</span>${dl!==null&&dl>=0?`<span class="b dl">अंतिम तिथि ${esc(fmt(p.deadline))} (${dl===0?"आज":dl+" दिन बाकी"})</span>`:""}`;
   $("mt").textContent=p.title;$("mm").innerHTML=unTag(p)+esc(fmt(p.date));$("mp").textContent=p.desc||"";
   $("mo").hidden=!u;$("mn").hidden=!!u;if(u){$("mo").href=u;$("mc").onclick=async()=>{try{await navigator.clipboard.writeText(u);$("mc").textContent="✅ कॉपी हो गया"}catch(e){prompt("Link कॉपी कीजिए:",u)}}}
