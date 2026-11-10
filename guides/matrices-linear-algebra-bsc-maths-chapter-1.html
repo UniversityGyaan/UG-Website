@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Matrices (आव्यूह): प्रकार, Operations, Inverse और Rank – B.Sc. Maths Chapter 1 नोट्स – University Gyaan</title>
+<meta name="description" content="B.Sc. Maths के Matrices & Linear Algebra का पहला चैप्टर: matrix के प्रकार, transpose, determinant, inverse, rank और हल किए हुए उदाहरण हिंदी में।">
+<meta name="theme-color" content="#070C1E">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://*.adtrafficquality.google; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https:; frame-src https://www.youtube-nocookie.com https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net; object-src 'none'; base-uri 'self'; form-action 'self'">
+<link rel="canonical" href="https://universitygyaan.in/guides/matrices-linear-algebra-bsc-maths-chapter-1.html">
+<link rel="icon" href="../logo.png" type="image/png">
+<link rel="apple-touch-icon" href="../logo.png">
+<meta property="og:title" content="Matrices (आव्यूह): प्रकार, Operations, Inverse और Rank – B.Sc. Maths Chapter 1 नोट्स – University Gyaan">
+<meta property="og:description" content="B.Sc. Maths के Matrices & Linear Algebra का पहला चैप्टर: matrix के प्रकार, transpose, determinant, inverse, rank और हल किए हुए उदाहरण हिंदी में।">
+<meta property="og:url" content="https://universitygyaan.in/guides/matrices-linear-algebra-bsc-maths-chapter-1.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://universitygyaan.in/logo.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Matrices (आव्यूह): प्रकार, Operations, Inverse और Rank – B.Sc. Maths Chapter 1 नोट्स", "description": "B.Sc. Maths के Matrices & Linear Algebra का पहला चैप्टर: matrix के प्रकार, transpose, determinant, inverse, rank और हल किए हुए उदाहरण हिंदी में।", "datePublished": "2026-11-06", "dateModified": "2026-11-06", "inLanguage": "hi", "author": {"@type": "Person", "name": "Sanjeev Chauhan"}, "publisher": {"@type": "Organization", "name": "University Gyaan", "logo": {"@type": "ImageObject", "url": "https://universitygyaan.in/logo.png"}}, "mainEntityOfPage": "https://universitygyaan.in/guides/matrices-linear-algebra-bsc-maths-chapter-1.html"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Singular और non-singular matrix में क्या अंतर है?", "acceptedAnswer": {"@type": "Answer", "text": "Singular matrix का determinant 0 होता है और उसका inverse नहीं होता।"}}, {"@type": "Question", "name": "क्या हर matrix का inverse होता है?", "acceptedAnswer": {"@type": "Answer", "text": "नहीं, सिर्फ़ ऐसे वर्ग matrix का जिसका determinant शून्य न हो।"}}]}</script>
+<script>
+(function(){
+  try{if(window.top!==window.self){document.documentElement.style.display="none";window.top.location=window.self.location}}catch(e){document.documentElement.style.display="none"}
+  var d=document.documentElement,t;try{t=localStorage.getItem("ug_theme")}catch(e){}
+  if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+  d.dataset.theme=t;
+})();
+</script>
+<link rel="stylesheet" href="guide.css">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
+</head>
+<body>
+<header><div class="nav">
+  <a class="brand" href="../" aria-label="University Gyaan Home"><img alt="" src="../logo.png" width="38" height="38"><span><b>University Gyaan</b><small>by Sanjeev Chauhan</small></span></a>
+  <div class="r"><a class="lnk" href="./">Guides</a><a class="lnk u" href="../notices.html">Updates</a>
+  <button class="ib" id="tg" type="button" aria-label="Dark / Light mode बदलें"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button></div>
+</div></header>
+<main><article>
+<p class="crumb"><a href="../">Home</a> › <a href="./">Guides</a> › Study Material</p>
+<h1>Matrices (आव्यूह): प्रकार, Operations, Inverse और Rank – B.Sc. Maths Chapter 1 नोट्स</h1>
+<p class="meta"><span class="tag">Study Material</span>अपडेट: 6 नवंबर 2026 · लेखक: Sanjeev Chauhan, University Gyaan</p>
+
+<p class="lead">Matrices & Linear Algebra का पहला चैप्टर पूरी किताब की नींव है। यहाँ matrix के प्रकार, operations, inverse और rank के मुख्य नियम हल किए हुए उदाहरणों के साथ दिए हैं।</p>
+
+<h2>1. Matrix क्या है?</h2>
+<p>पंक्तियों (rows) और स्तंभों (columns) में सजाई गई संख्याओं की आयताकार सारणी को matrix (आव्यूह) कहते हैं। m पंक्ति और n स्तंभ वाले matrix को <b>m × n</b> क्रम (order) का matrix कहते हैं।</p>
+
+<h2>2. Matrix के मुख्य प्रकार</h2>
+<ul>
+<li><b>वर्ग आव्यूह (Square):</b> पंक्तियों और स्तंभों की संख्या बराबर।</li>
+<li><b>विकर्ण (Diagonal):</b> मुख्य विकर्ण के बाहर सभी अवयव शून्य।</li>
+<li><b>इकाई (Identity), I:</b> विकर्ण पर 1 और बाकी 0। किसी भी matrix A के लिए AI = IA = A।</li>
+<li><b>शून्य (Null/Zero):</b> सभी अवयव 0।</li>
+<li><b>सममित (Symmetric):</b> A' = A।</li>
+<li><b>विषम सममित (Skew-symmetric):</b> A' = −A। इसके विकर्ण के सभी अवयव 0 होते हैं।</li>
+<li><b>लंबकोणीय (Orthogonal):</b> AA' = I।</li>
+</ul>
+<p><b>याद रखिए:</b> हर वर्ग matrix को एक सममित और एक विषम सममित matrix के योग के रूप में लिखा जा सकता है: A = ½(A + A') + ½(A − A')।</p>
+
+<h2>3. Operations के नियम</h2>
+<ul>
+<li>जोड़ और घटाव सिर्फ़ तभी संभव है जब दोनों matrix का क्रम समान हो।</li>
+<li>गुणा AB तभी संभव है जब A के स्तंभों की संख्या B की पंक्तियों की संख्या के बराबर हो।</li>
+<li>सामान्यतः <b>AB ≠ BA</b>। यानी matrix गुणा क्रमविनिमेय (commutative) नहीं है।</li>
+<li>(AB)' = B'A' और (AB)⁻¹ = B⁻¹A⁻¹।</li>
+</ul>
+
+<h2>4. Determinant, Adjoint और Inverse</h2>
+<p>2 × 2 matrix A = [[a, b], [c, d]] के लिए |A| = ad − bc। Inverse तभी होता है जब |A| ≠ 0 हो (non-singular matrix)।</p>
+<p><b>सूत्र:</b> A⁻¹ = adj(A) / |A|, जहाँ adj(A) सहखंडज (cofactor) matrix का transpose है।</p>
+<p><b>हल किया हुआ उदाहरण:</b> A = [[2, 1], [5, 3]] का inverse निकालिए।<br>
+|A| = 2×3 − 1×5 = 1। adj(A) = [[3, −1], [−5, 2]]। इसलिए A⁻¹ = [[3, −1], [−5, 2]]।<br>
+जाँच: A × A⁻¹ = [[2×3 + 1×(−5), 2×(−1) + 1×2], [5×3 + 3×(−5), 5×(−1) + 3×2]] = [[1, 0], [0, 1]] ✔।</p>
+
+<h2>5. Rank (कोटि) और Echelon Form</h2>
+<p>किसी matrix की <b>rank</b> उसके सबसे बड़े ऐसे वर्ग उपआव्यूह (square sub-matrix) का क्रम है जिसका determinant शून्य न हो। Rank निकालने का आसान तरीका <b>पंक्ति संक्रियाएँ (row operations)</b> लगाकर matrix को echelon form में लाना है। गैर-शून्य पंक्तियों की संख्या ही rank होती है।</p>
+<p><b>उदाहरण:</b> A = [[1, 2, 3], [2, 4, 6], [1, 1, 1]]।<br>
+R₂ → R₂ − 2R₁ से दूसरी पंक्ति [0, 0, 0] हो गई। R₃ → R₃ − R₁ से तीसरी पंक्ति [0, −1, −2] बनी। अब गैर-शून्य पंक्तियाँ दो हैं, इसलिए rank = 2।</p>
+
+<h2>6. रैखिक समीकरण निकाय (AX = B)</h2>
+<ul>
+<li>यदि rank(A) = rank([A|B]) = अज्ञातों की संख्या, तो <b>अद्वितीय हल</b>।</li>
+<li>यदि rank(A) = rank([A|B]) &lt; अज्ञातों की संख्या, तो <b>अनंत हल</b>।</li>
+<li>यदि rank(A) ≠ rank([A|B]), तो निकाय <b>असंगत (inconsistent)</b>, कोई हल नहीं।</li>
+<li>समघात निकाय AX = 0 में हमेशा कम से कम शून्य हल (trivial solution) होता है।</li>
+</ul>
+
+<h2>Practice Questions</h2>
+<details><summary>1. यदि A सममित है तो A' क्या होगा?</summary><p>उत्तर: A' = A।</p></details>
+<details><summary>2. [[1, 2], [2, 4]] का inverse होता है या नहीं?</summary><p>उत्तर: नहीं। |A| = 4 − 4 = 0, यानी यह singular matrix है।</p></details>
+<details><summary>3. विषम सममित matrix के विकर्ण के अवयव क्या होते हैं?</summary><p>उत्तर: सभी शून्य।</p></details>
+<details><summary>4. 3 × 3 identity matrix की rank क्या है?</summary><p>उत्तर: 3।</p></details>
+<details><summary>5. (AB)⁻¹ बराबर है?</summary><p>उत्तर: B⁻¹A⁻¹।</p></details>
+
+<h2>तैयारी के सुझाव</h2>
+<ol>
+<li>Row operations का अभ्यास रोज़ कुछ सवालों से कीजिए, क्योंकि rank और inverse की गलतियाँ ज़्यादातर गणना की होती हैं।</li>
+<li>हर प्रमेय (theorem) का प्रमाण एक बार खुद लिखकर देखिए।</li>
+<li>Exercise के सवाल पहले खुद हल कीजिए, फिर solution से मिलाइए।</li>
+</ol>
+<p>इस चैप्टर के Exercise-1 और Chapter-2 के पूरे हल LMS पर उपलब्ध हैं। नीचे दिए बटन से फ्री प्रीव्यू देखिए।</p>
+<h2>अक्सर पूछे जाने वाले सवाल</h2><details><summary>Singular और non-singular matrix में क्या अंतर है?</summary><p>Singular matrix का determinant 0 होता है और उसका inverse नहीं होता। Non-singular का determinant शून्य नहीं होता, इसलिए उसका inverse होता है।</p></details><details><summary>Rank निकालने का सबसे आसान तरीका क्या है?</summary><p>पंक्ति संक्रियाओं से matrix को echelon form में लाकर गैर-शून्य पंक्तियाँ गिनना।</p></details><details><summary>क्या हर matrix का inverse होता है?</summary><p>नहीं। सिर्फ़ ऐसे वर्ग matrix का, जिसका determinant शून्य न हो।</p></details>
+<div class="disc">यह पेज पढ़ाई में मदद के लिए सामान्य जानकारी देता है। आपका सिलेबस और परीक्षा का पैटर्न विश्वविद्यालय के अनुसार अलग हो सकता है, इसलिए तैयारी से पहले अपना official सिलेबस ज़रूर देख लें।</div>
+
+<aside class="lmsbox"><b>📚 Notes, Videos aur Practice Material</b><p>इस चैप्टर के पूरे नोट्स का फ्री प्रीव्यू देखिए: B.Sc. Maths – Matrices & Linear Algebra (Ch-1)।</p><a class="lmsbtn" href="https://lms.universitygyaan.in/materials/bf54fc47-7455-4574-a3d5-784145b5cec7" target="_blank" rel="noopener">फ्री प्रीव्यू देखें →</a></aside>
+<h2>ये भी पढ़िए</h2><div class="rel"><a href="ccsu-meerut-complete-guide.html">CCSU Meerut की पूरी जानकारी – Notice, Exam Form, Result और Samarth Portal<small>Official links, परीक्षा का सामान्य क्रम और ताज़ा CCSU notices एक ही पेज पर।</small></a><a href="ccsu-exam-form-samarth-portal.html">CCSU Exam Form Samarth Portal पर कैसे भरें – Step by Step Guide<small>Samarth portal पर login से लेकर fee, college verification और receipt तक पूरा प्रोसेस।</small></a><a href="ccsu-result-kaise-check-kare.html">CCSU Result कैसे चेक करें – Marksheet और Scorecard देखने का तरीका<small>Official website से result देखने और डाउनलोड करने का आसान तरीका।</small></a></div>
+</article></main>
+<footer>
+  <div><a href="../">Home</a><a href="../notices.html">Updates</a><a href="./">Guides</a><a href="../about.html">About</a><a href="../contact.html">Contact</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms</a><a href="../disclaimer.html">Disclaimer</a></div>
+  <p style="margin:6px 0 0">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
+</footer>
+<script src="guide.js"></script>
+</body>
+</html>
