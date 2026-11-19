@@ -132,6 +132,15 @@ select,input[type=search]{box-shadow:inset 0 2px 5px rgba(20,40,90,.14);border:1
 .post{position:relative;transition:transform .2s ease,box-shadow .2s ease,border-color .2s;box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 8px 18px -10px rgba(30,60,160,.35),0 0 0 0 transparent}
 .post:hover{transform:translateY(-3px);box-shadow:0 1px 0 rgba(255,255,255,.4) inset,0 16px 28px -12px rgba(47,91,255,.45)}
 @media (prefers-reduced-motion:reduce){.seg button,.chips button,.post,.pick{transition:none!important;transform:none!important}.seg button.on::after,.chips button.on::after{animation:none;display:none}}
+
+.lo{display:flex;align-items:center;gap:12px;max-width:1200px;margin:12px auto 0;padding:12px 14px;border-radius:16px;text-decoration:none;color:#fff;background:linear-gradient(100deg,#e5384b,#ff7a3d 60%,#f5b82e);box-shadow:0 0 0 0 rgba(229,56,75,.6);animation:lopulse 1.6s infinite;width:calc(100% - 28px)}
+.lo-new{flex:none;font-size:11.5px;font-weight:900;letter-spacing:.06em;background:#fff;color:#c01830;padding:3px 9px;border-radius:99px;animation:loblink 1s steps(2,start) infinite}
+.lo-t{flex:1;min-width:0;line-height:1.3}.lo-t b{display:block;font-size:clamp(15px,4.2vw,19px)}.lo-t small{display:block;font-size:12.5px;opacity:.95}
+.lo-go{flex:none;font-weight:800;font-size:13.5px;background:rgba(0,0,0,.22);padding:8px 13px;border-radius:12px;white-space:nowrap}
+@keyframes lopulse{0%{box-shadow:0 0 0 0 rgba(229,56,75,.55)}70%{box-shadow:0 0 0 14px rgba(229,56,75,0)}100%{box-shadow:0 0 0 0 rgba(229,56,75,0)}}
+@keyframes loblink{50%{opacity:.25}}
+@media(max-width:420px){.lo{gap:8px;padding:11px 12px}.lo-go{padding:7px 10px;font-size:12.5px}}
+@media(prefers-reduced-motion:reduce){.lo,.lo-new{animation:none}}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386"
      crossorigin="anonymous"></script>
@@ -142,6 +151,8 @@ select,input[type=search]{box-shadow:inset 0 2px 5px rgba(20,40,90,.14);border:1
   <nav><a class="l" href="./">Home</a><a class="l" href="notices.html">Updates</a><a class="l" href="guides/">Guides</a><a class="l" href="videos.html">Videos</a><a class="l" id="n-st" href="#">Study Material</a><a class="l" id="n-co" href="#">Courses</a><a class="l" href="about.html">About</a>
   <button class="ib" id="tg" aria-label="Dark / Light mode बदलें" title="Dark / Light mode"></button><a id="n-lg" class="cta" href="#">LMS Login</a></nav>
 </div></header>
+
+<a class="lo" href="leftout-viva-2026.html" aria-label="Leftout Practical Viva 2026 की तिथि, केंद्र और notice देखिए"><span class="lo-new">NEW</span><span class="lo-t"><b>Leftout Practical / Viva 2026</b><small>CCS University Meerut · तिथि, केंद्र और Notice देखिए</small></span><span class="lo-go">देखिए ➜</span></a>
 
 <section class="hero">
   <h1>अपनी <span>University / College</span> के सारे अपडेट, एक जगह</h1>
