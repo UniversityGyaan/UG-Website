@@ -92,6 +92,26 @@ footer a{margin:0 7px;color:var(--mu);text-decoration:none;line-height:2.2}foote
 .mt{margin-top:12px}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0));transform:translate(-50%,30px);opacity:0;background:#10203f;color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:90vw;text-align:center;transition:.25s;pointer-events:none;z-index:50}
 .toast.on{opacity:1;transform:translate(-50%,0)}
+
+main{padding-bottom:104px}
+.pvt{display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;padding:12px 14px;border-radius:14px;border:1px dashed var(--bd);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14.5px;cursor:pointer;text-align:left}
+.pvt svg{width:26px;height:26px;color:var(--red);flex:none}
+.pvt small{display:block;color:var(--mu);font-weight:500;font-size:12.5px}
+.pvim{margin-top:16px;border:1px solid var(--bd);border-radius:14px;overflow:hidden;background:#fff}
+.pvim img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--hd);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--bd);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0))}
+.barin{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:stretch}
+.bo{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 14px;border-radius:14px;background:linear-gradient(135deg,#ffe08a,#f5b82e);color:#1a1300;font-weight:800;font-size:15px;text-decoration:none;white-space:nowrap}
+.bo svg{width:18px;height:18px;flex:none}
+.bi{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;border:0;cursor:pointer;text-decoration:none}
+.bi svg{width:21px;height:21px}
+.sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sbk{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.sp{position:relative;width:100%;max-width:560px;background:var(--card);border-radius:22px 22px 0 0;border:1px solid var(--bd);padding:16px 16px calc(18px + env(safe-area-inset-bottom,0))}
+.sph{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sph b{font-size:16px}
+.sph button{width:36px;height:36px;border-radius:10px;border:1px solid var(--bd);background:var(--card2);color:var(--tx);font-size:16px;cursor:pointer}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
 </head>
@@ -183,41 +203,47 @@ function render(p,raw,mp){
   document.title=p.title+" – University Gyaan";
   var md=document.querySelector('meta[name=description]');if(md)md.content=(p.uni?p.uni+": ":"")+p.title;
   var pv=u?preview(u):null,pvh="";
-  if(pv){
-    pvh='<div class="pv"><div class="pvh"><span>Notice Preview'+(pv.h?' · '+pv.h:'')+'</span><a target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">पूरा खोलिए ↗</a></div><div class="pvb">'
-      +(pv.k==="img"?'<img loading="lazy" alt="'+esc(p.title)+'" src="'+esc(pv.src)+'" referrerpolicy="no-referrer">'
-        :'<iframe loading="lazy" title="Notice Preview" src="'+esc(pv.src)+'" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>')
-      +'</div><p class="pvn">Preview न दिखे तो ऊपर "पूरा खोलिए" या नीचे Official Link से notice खोलिए।</p></div>';
-  }
+  if(pv&&pv.k==="img")pvh='<div class="pvim"><img loading="lazy" alt="'+esc(p.title)+'" src="'+esc(pv.src)+'" referrerpolicy="no-referrer"></div>';
+  else if(pv)pvh='<div id="pvw"><button class="pvt" id="pvt" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><span>Notice का Preview देखिए<small>यहीं पर खुलेगा, नीचे Official Link भी है</small></span></button></div>';
   var h='<article class="card"><div class="row"><span class="b">'+esc(TYPES[p.type]||"Notice")+'</span>'+(isNew?'<span class="b new">NEW</span>':"")+(dl!==null&&dl>=0?'<span class="b dl">अंतिम तिथि '+esc(fmt(p.deadline))+'</span>':"")+'</div>'
    +(p.uni?'<span class="un">'+esc(p.uni)+'</span>':"")
    +'<h1>'+esc(p.title)+'</h1><div class="meta">'+(p.date?esc(fmt(p.date)):"")+'</div>'
    +(dl!==null&&dl>=0?'<div class="cnt'+(dl>5?" ok":"")+'">⏰ अंतिम तिथि में <b>'+(dl===0?"आज आख़िरी दिन है":dl+" दिन बाकी हैं")+'</b></div>':"")
    +(p.desc?'<p class="desc">'+esc(p.desc)+'</p>':"")
    +pvh
+   +(u?"":'<div class="cnt">इस notice का सीधा link उपलब्ध नहीं है। कृपया University/College की official website देखिए।</div>')
    +'<div class="ad" id="ad-top"><small>विज्ञापन</small></div>'
-   +'<div class="act">'
-   +(u?'<a class="btn pri" id="open" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Notice खोलिए (Official Link)</a>':'<div class="cnt">इस notice का सीधा link उपलब्ध नहीं है। कृपया University/College की official website देखिए।</div>')
-   +'</div>'
-   +'<hr class="dv"><p class="hd2">दोस्तों को शेयर कीजिए</p><div class="sh">'
-   +sb("wa","WhatsApp",{id:"s-wa",href:"#"})+sb("tg","Telegram",{id:"s-tg",href:"#"})+sb("ig","Instagram",{id:"s-ig"})
-   +sb("fb","Facebook",{id:"s-fb",href:"#"})+sb("x","X",{id:"s-x",href:"#"})+sb("cp","Link कॉपी",{id:"cp"})+'</div>'
-   +(navigator.share?'<button class="btn mt" id="s-sys" type="button" style="width:100%"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.sh+'</svg>और ऐप्स में शेयर करें</button>':"")
    +'<p class="note">यह Notice University/College की official website से ली गई है। किसी भी फ़ैसले से पहले official site पर मिलान ज़रूर कर लें।</p></article>'
    +'<div class="ad" id="ad-bot"><small>विज्ञापन</small></div>'
    +'<div id="relw"></div>'
-   +'<h2>और Updates के लिए जुड़िए</h2><div class="two"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.tg+'">Telegram Channel</a><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.wa+'">WhatsApp Channel</a></div>';
+   +'<h2>और Updates के लिए जुड़िए</h2><div class="two"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.tg+'">Telegram Channel</a><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.wa+'">WhatsApp Channel</a></div>'
+   +'<nav class="bar" aria-label="Notice खोलिए और शेयर कीजिए"><div class="barin">'
+   +(u?'<a class="bo" id="open" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Notice खोलिए</a>':'')
+   +'<a class="bi i-wa" id="b-wa" target="_blank" rel="noopener noreferrer" href="#" aria-label="WhatsApp पर शेयर करें"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.wa+'</svg></a>'
+   +'<a class="bi i-tg" id="b-tg" target="_blank" rel="noopener noreferrer" href="#" aria-label="Telegram पर शेयर करें"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.tg+'</svg></a>'
+   +'<button class="bi i-sh" id="b-more" type="button" aria-label="और शेयर विकल्प"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.sh+'</svg></button>'
+   +'</div></nav>'
+   +'<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="शेयर कीजिए"><div class="sbk" id="sbk"></div><div class="sp"><div class="sph"><b>शेयर कीजिए</b><button type="button" id="sx" aria-label="बंद करें">✕</button></div><div class="sh">'
+   +sb("wa","WhatsApp",{id:"s-wa",href:"#"})+sb("tg","Telegram",{id:"s-tg",href:"#"})+sb("ig","Instagram",{id:"s-ig"})
+   +sb("fb","Facebook",{id:"s-fb",href:"#"})+sb("x","X",{id:"s-x",href:"#"})+sb("cp","Link कॉपी",{id:"cp"})+'</div>'
+   +(navigator.share?'<button class="btn mt" id="s-sys" type="button" style="width:100%"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.sh+'</svg>फ़ोन के और ऐप्स</button>':"")
+   +'</div></div>';
   show(h);
   var here=location.href,head=(p.uni?p.uni+": ":"")+p.title,plain=head+"\n"+here;
-  $("s-wa").href="https://wa.me/?text="+encodeURIComponent("*"+head+"*\n"+here+"\n\nUniversity Gyaan");
-  $("s-tg").href="https://t.me/share/url?url="+encodeURIComponent(here)+"&text="+encodeURIComponent(head);
+  var wa="https://wa.me/?text="+encodeURIComponent("*"+head+"*\n"+here+"\n\nUniversity Gyaan"),tg="https://t.me/share/url?url="+encodeURIComponent(here)+"&text="+encodeURIComponent(head);
+  $("s-wa").href=wa;$("b-wa").href=wa;$("s-tg").href=tg;$("b-tg").href=tg;
   $("s-fb").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(here);
   $("s-x").href="https://twitter.com/intent/tweet?text="+encodeURIComponent(head)+"&url="+encodeURIComponent(here);
-  $("cp").onclick=function(){copyText(here).then(function(ok){toast(ok?"Link कॉपी हो गया":"कॉपी नहीं हो सका")})};
+  var sh=$("sheet");function openS(){sh.hidden=false}function closeS(){sh.hidden=true}
+  $("b-more").onclick=openS;$("sx").onclick=closeS;$("sbk").onclick=closeS;
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")closeS()});
+  $("cp").onclick=function(){copyText(here).then(function(ok){closeS();toast(ok?"Link कॉपी हो गया":"कॉपी नहीं हो सका")})};
   $("s-ig").onclick=function(){
     if(navigator.share){navigator.share({title:head,text:head,url:here}).catch(function(){});return}
-    copyText(plain).then(function(ok){toast(ok?"Link कॉपी हो गया। Instagram में चिपकाइए।":"Link कॉपी नहीं हो सका");if(ok)setTimeout(function(){window.open("https://www.instagram.com/","_blank","noopener")},900)})};
+    copyText(plain).then(function(ok){closeS();toast(ok?"Link कॉपी हो गया। Instagram में चिपकाइए।":"Link कॉपी नहीं हो सका");if(ok)setTimeout(function(){window.open("https://www.instagram.com/","_blank","noopener")},900)})};
   var sy=$("s-sys");if(sy)sy.onclick=function(){navigator.share({title:head,text:head,url:here}).catch(function(){})};
+  var pt=$("pvt");if(pt&&pv)pt.onclick=function(){
+    $("pvw").innerHTML='<div class="pv"><div class="pvh"><span>Notice Preview'+(pv.h?' · '+pv.h:'')+'</span><a target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">पूरा खोलिए ↗</a></div><div class="pvb"><iframe title="Notice Preview" src="'+esc(pv.src)+'" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe></div><p class="pvn">Preview खाली दिखे तो नीचे "Notice खोलिए" दबाइए। कुछ university sites अपनी PDF यहाँ दिखने नहीं देतीं।</p></div>'};
   adBox($("ad-top"),CFG.slots.top);adBox($("ad-bot"),CFG.slots.bot);
   related(p,raw,mp);
 }
