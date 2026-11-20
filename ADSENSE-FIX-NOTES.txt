@@ -1,0 +1,8 @@
+UG-Website update (20 Nov 2026) - AdSense "low-value content" fix
+
+Upload karo (purani files replace): sab files, folder ke hisaab se.
+Naya: editorial-policy.html
+Badla: index.html (~530 shabd ka asli text + FAQ), about.html (expand), footers (Editorial Policy link),
+       24 guides (lekhak/jaanch box), videos.html (noindex), sitemap.xml (videos + leftout hata diye, editorial add),
+       robots.txt (admin/notice/tools disallow)
+Guide "up-free-o-level-ccc..." me double "ye bhi padhiye" block hata diya.

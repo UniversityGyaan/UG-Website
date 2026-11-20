@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /notice.html
+Disallow: /tools/
 
 Sitemap: https://universitygyaan.in/sitemap.xml

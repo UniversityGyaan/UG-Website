@@ -2,13 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://universitygyaan.in/</loc><lastmod>2026-10-23</lastmod><priority>1.0</priority></url>
   <url><loc>https://universitygyaan.in/notices.html</loc><lastmod>2026-10-23</lastmod><priority>0.9</priority></url>
-  <url><loc>https://universitygyaan.in/leftout-viva-2026.html</loc><lastmod>2026-11-19</lastmod><priority>0.9</priority></url>
   <url><loc>https://universitygyaan.in/about.html</loc><lastmod>2026-10-21</lastmod><priority>0.5</priority></url>
   <url><loc>https://universitygyaan.in/contact.html</loc><lastmod>2026-10-21</lastmod><priority>0.5</priority></url>
   <url><loc>https://universitygyaan.in/privacy.html</loc><lastmod>2026-10-21</lastmod><priority>0.5</priority></url>
   <url><loc>https://universitygyaan.in/terms.html</loc><lastmod>2026-10-21</lastmod><priority>0.5</priority></url>
   <url><loc>https://universitygyaan.in/disclaimer.html</loc><lastmod>2026-10-21</lastmod><priority>0.5</priority></url>
-  <url><loc>https://universitygyaan.in/videos.html</loc><lastmod>2026-10-21</lastmod><priority>0.8</priority></url>
 
   <url><loc>https://universitygyaan.in/guides/</loc><lastmod>2026-11-06</lastmod><priority>0.9</priority></url>
   <url><loc>https://universitygyaan.in/guides/ai-for-all-ccsu-complete-guide.html</loc><lastmod>2026-11-06</lastmod><priority>0.8</priority></url>
@@ -47,4 +45,5 @@
   </url>
   <url><loc>https://universitygyaan.in/guides/abc-id-apaar-id-digilocker-kaise-banaye.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
   <url><loc>https://universitygyaan.in/guides/up-free-o-level-ccc-course-obc-registration.html</loc><lastmod>2026-11-10</lastmod><priority>0.8</priority></url>
+  <url><loc>https://universitygyaan.in/editorial-policy.html</loc></url>
 </urlset>

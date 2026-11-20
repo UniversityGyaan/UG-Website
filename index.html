@@ -147,6 +147,25 @@ footer{border-top:1px solid var(--bd);background:var(--hd);backdrop-filter:blur(
 @media(max-width:360px){.brand b{font-size:15px}.brand img{width:34px;height:34px}.nav{padding:0 12px}.brand small{display:none}.welcome{letter-spacing:.2em}}
 @media(hover:none){.card{transform:none!important}.card:active{transform:scale(.985)!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.card{transform:none!important}.js .rv{opacity:1;transform:none}}
+
+.lg{width:100%;max-width:1180px;margin:clamp(28px,6vh,48px) auto 0}
+.lg h2{font-size:clamp(18px,2.4vw,22px);margin:0 0 12px}
+.lg .gl{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:640px){.lg .gl{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){.lg .gl{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.lg .gl a{display:block;padding:14px 16px;border:1px solid var(--bd);background:var(--glass);color:var(--tx);border-radius:14px;text-decoration:none;font-weight:600;line-height:1.4}
+.lg .gl a:hover{border-color:var(--acc)}
+.lg .all{display:inline-block;margin-top:12px;color:var(--acc);font-weight:700;text-decoration:none}
+
+.txt{width:100%;max-width:1180px;margin:clamp(28px,6vh,48px) auto 0;padding:0 2px}
+.txt h2{font-size:clamp(18px,2.4vw,22px);margin:26px 0 8px}
+.txt p,.txt li{color:var(--mu);line-height:1.8;font-size:15.5px;margin:0 0 10px}
+.txt ul{margin:0 0 10px;padding-left:20px}
+.txt b{color:var(--tx)}
+.txt details{background:var(--glass);border:1px solid var(--bd);border-radius:14px;padding:12px 16px;margin:0 0 10px}
+.txt summary{cursor:pointer;font-weight:700;color:var(--tx)}
+.txt details p{margin:10px 0 0}
+.txt a{color:var(--acc)}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
 </head>
@@ -212,10 +231,38 @@ footer{border-top:1px solid var(--bd);background:var(--hd);backdrop-filter:blur(
       </a>
     </div>
   </section>
+
+  <section class="lg" aria-label="Latest guides">
+    <h2>📖 Latest Guides</h2>
+    <div class="gl"><a href="guides/abc-id-apaar-id-digilocker-kaise-banaye.html">DigiLocker से ABC ID / APAAR ID कैसे बनाएँ</a><a href="guides/up-free-o-level-ccc-course-obc-registration.html">UP का Free O Level और CCC कोर्स: पात्रता और Registration</a><a href="guides/ccsu-merit-list-kaise-dekhe.html">CCSU Merit List कैसे देखें</a><a href="guides/up-scholarship-form-kaise-bhare.html">UP Scholarship Form कैसे भरें</a><a href="guides/ccsu-result-kaise-check-kare.html">CCSU Result कैसे चेक करें</a><a href="guides/ccsu-exam-form-samarth-portal.html">CCSU Exam Form Samarth Portal पर कैसे भरें</a></div>
+    <a class="all" href="guides/">सभी गाइड देखें →</a>
+  </section>
+
+  <section class="txt" aria-label="University Gyaan के बारे में">
+    <h2>University Gyaan क्या है?</h2>
+    <p><b>University Gyaan</b> एक स्वतंत्र शैक्षिक वेबसाइट है, जिसे हापुड़ (उत्तर प्रदेश) से Sanjeev Chauhan चलाते हैं। यहाँ विद्यार्थियों को अपनी University और College की ज़रूरी जानकारी एक ही जगह आसान हिंदी में मिलती है: Notice, Result, Datesheet, Admit Card, Exam Form की अंतिम तारीख़ और Study Material। हमारा मक़सद है कि कोई भी विद्यार्थी सिर्फ़ जानकारी न मिलने के कारण कोई फ़ॉर्म या मौक़ा न चूके।</p>
+    <h2>यहाँ आपको क्या मिलेगा?</h2>
+    <ul>
+      <li><b>Updates:</b> अलग-अलग University और College की नई notice, हर notice के साथ original official link।</li>
+      <li><b>Guides:</b> CCSU exam form, result, merit list, scholarship, ABC ID/APAAR ID जैसे विषयों पर चरण-दर-चरण गाइड, जो हम ख़ुद लिखते हैं। <a href="guides/">सभी गाइड देखिए</a>।</li>
+      <li><b>Last Date Reminders:</b> आने वाली ज़रूरी तारीख़ें एक जगह।</li>
+      <li><b>Study Material:</b> हमारे LMS पर PDF नोट्स, वीडियो लेक्चर और अभ्यास सामग्री, पहले फ्री प्रीव्यू के साथ।</li>
+      <li><b>YouTube वीडियो:</b> University के हिसाब से exam form, result और admit card की वीडियो जानकारी।</li>
+    </ul>
+    <h2>हम जानकारी पर भरोसा कैसे बनाते हैं?</h2>
+    <p>Notice सिर्फ़ University और College की official वेबसाइटों से ली जाती हैं और हर update में original link दिया जाता है, ताकि आप ख़ुद जाँच सकें। गाइड हम official portal और notice देखकर अपने शब्दों में लिखते हैं और नियम बदलने पर अपडेट करते हैं। विद्यार्थियों की भेजी notice admin की जाँच के बाद ही प्रकाशित होती हैं। पूरी प्रक्रिया हमारी <a href="editorial-policy.html">संपादकीय नीति</a> में लिखी है।</p>
+    <h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details><summary>क्या University Gyaan कोई official University वेबसाइट है?</summary><p>नहीं। यह एक स्वतंत्र शैक्षिक वेबसाइट है। हम official जानकारी को आसान बनाकर बताते हैं और हर update के साथ official link देते हैं। किसी भी फ़ॉर्म या फ़ीस से पहले official वेबसाइट पर ज़रूर जाँच करें।</p></details>
+    <details><summary>Exam form की अंतिम तारीख़ कहाँ देखूँ?</summary><p>अपनी University या College चुनकर Updates पेज पर देखिए, और Last Date Reminders वाले हिस्से में आने वाली तारीख़ें मिल जाएँगी। साथ ही CCSU के लिए हमारी <a href="guides/ccsu-exam-form-samarth-portal.html">Exam Form गाइड</a> भी देखिए।</p></details>
+    <details><summary>नकली notice से कैसे बचें?</summary><p>सिर्फ़ official वेबसाइट या उसी के link पर भरोसा करें और किसी भी फ़ॉर्म के लिए पैसे भेजने से पहले जाँच करें। इसके तरीक़े हमारी <a href="guides/fake-notice-se-kaise-bache.html">नकली notice से कैसे बचें</a> गाइड में हैं।</p></details>
+    <details><summary>क्या मैं अपने college की notice भेज सकता हूँ?</summary><p>हाँ। "Send us your college Notice" से notice भेजिए। हमारी जाँच और मंज़ूरी के बाद ही वह प्रकाशित होगी।</p></details>
+    <details><summary>कोई ग़लती दिखे तो क्या करें?</summary><p><a href="contact.html">Contact पेज</a> से हमें बताइए। हम जाँचकर ठीक करेंगे।</p></details>
+    <p>इस वेबसाइट के बारे में और जानने के लिए <a href="about.html">About Us</a> पढ़िए।</p>
+  </section>
 </main>
 
 <footer>
-  <div class="fl"><a href="guides/">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div>
+  <div class="fl"><a href="guides/">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a><a href="editorial-policy.html">Editorial Policy</a></div>
   <p class="copy">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
 </footer>
 
