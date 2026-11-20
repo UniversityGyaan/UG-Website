@@ -24,8 +24,8 @@
 :root{color-scheme:dark;--bg:#070C1E;--bg2:#0d1636;--card:#0e1732;--card2:#131f42;--bd:#22305a;--tx:#e9eefc;--mu:#9aa8cc;--acc:#f5b82e;--acct:#f5b82e;--blue:#4a74ff;--red:#ff5d6c;--grn:#34d399;--hd:rgba(10,17,48,.8)}
 :root[data-theme="light"]{color-scheme:light;--bg:#f3f6fc;--bg2:#e8eefb;--card:#fff;--card2:#eaf0fb;--bd:#d8e0f0;--tx:#10203f;--mu:#56658a;--acc:#f5b82e;--acct:#9a5b00;--blue:#2f5bff;--red:#e5384b;--grn:#0f9d6b;--hd:rgba(255,255,255,.85)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{overflow-x:hidden;-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;max-width:100vw;overflow-x:hidden;background:radial-gradient(1000px 600px at 50% -10%,var(--bg2),var(--bg));background-color:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Nirmala UI",sans-serif;padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0)}
+html{overflow-x:clip;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;max-width:100vw;overflow-x:clip;background:radial-gradient(1000px 600px at 50% -10%,var(--bg2),var(--bg));background-color:var(--bg);color:var(--tx);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari","Nirmala UI",sans-serif;padding-left:env(safe-area-inset-left,0);padding-right:env(safe-area-inset-right,0)}
 a{color:inherit}
 svg{display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:12px}
@@ -112,6 +112,16 @@ main{padding-bottom:104px}
 .sph{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .sph b{font-size:16px}
 .sph button{width:36px;height:36px;border-radius:10px;border:1px solid var(--bd);background:var(--card2);color:var(--tx);font-size:16px;cursor:pointer}
+.strip{border-top:1px solid var(--bd)}
+.stin{max-width:760px;margin:0 auto;padding:7px 12px;display:flex;gap:8px}
+.sj,.sn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:6px 10px;border-radius:12px;text-decoration:none;font-weight:800;font-size:12.5px;line-height:1.25;text-align:center}
+.sj{flex:1.7;background:linear-gradient(135deg,#ffe08a,#f5b82e);color:#1a1300}
+.sn{flex:1;background:var(--card2);color:var(--tx);border:1px solid var(--bd)}
+.sj svg,.sn svg{width:16px;height:16px;flex:none}
+.fl2{margin:10px 0 0;font-size:13.5px}
+.fl2 a{font-weight:700;color:var(--acct)}
+footer{padding-bottom:calc(92px + env(safe-area-inset-bottom,0))}
+@media(max-width:380px){.sj,.sn{font-size:11.5px;padding:6px 6px}}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
 </head>
@@ -120,7 +130,8 @@ main{padding-bottom:104px}
   <a class="brand" href="./" aria-label="University Gyaan Home"><img alt="" src="logo.png" width="38" height="38"><span><b>University Gyaan</b><small>by Sanjeev Chauhan</small></span></a>
   <div class="r"><a class="lnk" href="notices.html">सभी Updates</a>
   <button class="ib" id="tg" type="button" aria-label="Dark / Light mode बदलें"><svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button></div>
-</div></header>
+</div>
+  <div class="strip"><div class="stin"><a class="sj" href="https://join.universitygyaan.in/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 3 2.8 10.4l5.4 2 2 6.3 3-3.7 4.9 3.6L21.5 3z"/></svg><span>Join us for University &amp; College Updates</span></a><a class="sn" href="https://universitygyaan.github.io/SendNotice/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Send us Notice</span></a></div></div></header>
 
 <main id="main" aria-live="polite">
   <div class="sk" id="sk"></div>
@@ -128,7 +139,8 @@ main{padding-bottom:104px}
 </main>
 
 <footer>
-  <div><a href="./">Home</a><a href="notices.html">Updates</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a></div>
+  <div><a href="./">Home</a><a href="notices.html">Updates</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a><a href="editorial-policy.html">Editorial Policy</a></div>
+  <p class="fl2">LMS Portal: <a href="https://lms.universitygyaan.in" target="_blank" rel="noopener noreferrer">lms.universitygyaan.in</a><br>Admin Support: <a href="https://support.universitygyaan.in/student.html" target="_blank" rel="noopener noreferrer">support.universitygyaan.in</a></p>
   <p style="margin:6px 0 0">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
 </footer>
 
@@ -178,10 +190,10 @@ Promise.all([
 });
 
 function preview(u){
-  var low=u.toLowerCase().split("#")[0],base=low.split("?")[0],t;
+  var low=u.toLowerCase().split("#")[0],base=low.split("?")[0],d;
   if(/\.(jpe?g|png|webp|gif)$/.test(base))return{k:"img",src:u};
-  t=u.match(/^https?:\/\/(?:www\.)?t\.me\/(?:s\/)?([A-Za-z][A-Za-z0-9_]{3,})\/(\d+)/i);
-  if(t)return{k:"frame",src:"https://t.me/"+t[1]+"/"+t[2]+"?embed=1&mode=tme",h:"Telegram"};
+  d=u.match(/^https?:\/\/drive\.google\.com\/file\/d\/([-\w]{10,})/i)||u.match(/^https?:\/\/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([-\w]{10,})/i);
+  if(d)return{k:"drive",src:"https://drive.google.com/file/d/"+d[1]+"/preview",h:"Google Drive"};
   if(/\.pdf($|\?)/i.test(base+(low.indexOf("?")>-1?"?":"")))return{k:"frame",src:"https://docs.google.com/gview?embedded=1&url="+encodeURIComponent(u),h:"PDF"};
   return null;
 }
@@ -204,6 +216,7 @@ function render(p,raw,mp){
   var md=document.querySelector('meta[name=description]');if(md)md.content=(p.uni?p.uni+": ":"")+p.title;
   var pv=u?preview(u):null,pvh="";
   if(pv&&pv.k==="img")pvh='<div class="pvim"><img loading="lazy" alt="'+esc(p.title)+'" src="'+esc(pv.src)+'" referrerpolicy="no-referrer"></div>';
+  else if(pv&&pv.k==="drive")pvh='<div class="pv"><div class="pvh"><span>Notice Preview · Google Drive</span><a target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">पूरा खोलिए ↗</a></div><div class="pvb"><iframe loading="lazy" title="Notice Preview" src="'+esc(pv.src)+'" referrerpolicy="no-referrer" allow="fullscreen"></iframe></div></div>';
   else if(pv)pvh='<div id="pvw"><button class="pvt" id="pvt" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><span>Notice का Preview देखिए<small>यहीं पर खुलेगा, नीचे Official Link भी है</small></span></button></div>';
   var h='<article class="card"><div class="row"><span class="b">'+esc(TYPES[p.type]||"Notice")+'</span>'+(isNew?'<span class="b new">NEW</span>':"")+(dl!==null&&dl>=0?'<span class="b dl">अंतिम तिथि '+esc(fmt(p.deadline))+'</span>':"")+'</div>'
    +(p.uni?'<span class="un">'+esc(p.uni)+'</span>':"")
