@@ -72,6 +72,26 @@ footer a{margin:0 7px;color:var(--mu);text-decoration:none;line-height:2.2}foote
 @media(max-width:420px){.lnk{padding:9px 10px;font-size:13px}.brand b{font-size:15px}.brand img{width:34px;height:34px}.nav{padding:0 12px}}
 @media(max-width:380px){.brand small{display:none}.two{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.dv{height:1px;background:var(--bd);margin:20px 0 16px;border:0}
+.hd2{margin:0 0 10px;font-size:14px;font-weight:800;color:var(--mu);letter-spacing:.02em}
+.pv{margin-top:16px;border:1px solid var(--bd);border-radius:16px;overflow:hidden;background:var(--card2)}
+.pvh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;font-size:13px;font-weight:700;color:var(--mu);border-bottom:1px solid var(--bd)}
+.pvh a{color:var(--acct);text-decoration:none;font-weight:700}
+.pvb{background:#fff}
+.pvb iframe{display:block;width:100%;height:min(68vh,560px);min-height:380px;border:0;background:#fff}
+.pvb img{display:block;width:100%;height:auto;max-height:78vh;object-fit:contain;background:#fff}
+.pvn{margin:0;padding:9px 12px;font-size:12.5px;color:var(--mu);border-top:1px solid var(--bd)}
+.sh{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(min-width:560px){.sh{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.sb{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 4px 10px;border-radius:14px;border:1px solid var(--bd);background:var(--card2);color:var(--tx);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .2s,border-color .2s}
+.sb:hover{transform:translateY(-2px);border-color:var(--blue)}
+.ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff}
+.ic svg{width:20px;height:20px}
+.i-wa{background:#25d366}.i-tg{background:#2aabee}.i-ig{background:linear-gradient(45deg,#f9a03a,#e1306c 55%,#7b3fe4)}.i-fb{background:#1877f2}.i-x{background:#111}.i-cp{background:#64748b}.i-sh{background:var(--blue)}
+.mt{margin-top:12px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0));transform:translate(-50%,30px);opacity:0;background:#10203f;color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:90vw;text-align:center;transition:.25s;pointer-events:none;z-index:50}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9281139746143386" crossorigin="anonymous"></script>
 </head>
@@ -137,28 +157,67 @@ Promise.all([
   show('<div class="card empty"><h1>Notice load नहीं हो सकी</h1><p>Internet जाँचिए और दोबारा कोशिश कीजिए।</p><p><a class="btn pri" href="">दोबारा कोशिश करें</a></p></div>')
 });
 
+function preview(u){
+  var low=u.toLowerCase().split("#")[0],base=low.split("?")[0],t;
+  if(/\.(jpe?g|png|webp|gif)$/.test(base))return{k:"img",src:u};
+  t=u.match(/^https?:\/\/(?:www\.)?t\.me\/(?:s\/)?([A-Za-z][A-Za-z0-9_]{3,})\/(\d+)/i);
+  if(t)return{k:"frame",src:"https://t.me/"+t[1]+"/"+t[2]+"?embed=1&mode=tme",h:"Telegram"};
+  if(/\.pdf($|\?)/i.test(base+(low.indexOf("?")>-1?"?":"")))return{k:"frame",src:"https://docs.google.com/gview?embedded=1&url="+encodeURIComponent(u),h:"PDF"};
+  return null;
+}
+var IC={
+ wa:'<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 8.8c.3 2.6 2.7 5 5.8 5.9l1.4-1.6-2.1-1-1 .8c-.8-.4-1.5-1.1-2-2l.8-1-1-2.1z"/>',
+ tg:'<path d="M21.5 3 2.8 10.4l5.4 2 2 6.3 3-3.7 4.9 3.6L21.5 3z"/><path d="M8.2 12.4 17.5 6.5"/>',
+ ig:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/>',
+ fb:'<path d="M14 8.5h2.5V5H14a3.5 3.5 0 0 0-3.5 3.5V11H8v3.5h2.5V21H14v-6.5h2.5L17 11h-3V8.5z"/>',
+ x:'<path d="M4 4l16 16M20 4 4 20"/>',
+ cp:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/>',
+ sh:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>'
+};
+function sb(c,label,extra){return '<'+(extra.href?'a href="'+extra.href+'" target="_blank" rel="noopener noreferrer"':'button type="button"')+' class="sb" id="'+extra.id+'"><span class="ic i-'+c+'"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC[c]+'</svg></span>'+label+'</'+(extra.href?'a':'button')+'>'}
+var tt;function toast(m){var e=$("toast");if(!e){e=document.createElement("div");e.id="toast";e.className="toast";e.setAttribute("role","status");document.body.appendChild(e)}e.textContent=m;e.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){e.classList.remove("on")},2600)}
+function copyText(t){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).then(function(){return true}).catch(function(){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}a.remove();return ok})}
+
 function render(p,raw,mp){
   var u=fixU(p.url),dl=p.deadline?left(p.deadline):null,isNew=(Date.now()/1000-(p.ts||0))<172800;
   document.title=p.title+" – University Gyaan";
   var md=document.querySelector('meta[name=description]');if(md)md.content=(p.uni?p.uni+": ":"")+p.title;
+  var pv=u?preview(u):null,pvh="";
+  if(pv){
+    pvh='<div class="pv"><div class="pvh"><span>Notice Preview'+(pv.h?' · '+pv.h:'')+'</span><a target="_blank" rel="noopener noreferrer" href="'+esc(u)+'">पूरा खोलिए ↗</a></div><div class="pvb">'
+      +(pv.k==="img"?'<img loading="lazy" alt="'+esc(p.title)+'" src="'+esc(pv.src)+'" referrerpolicy="no-referrer">'
+        :'<iframe loading="lazy" title="Notice Preview" src="'+esc(pv.src)+'" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>')
+      +'</div><p class="pvn">Preview न दिखे तो ऊपर "पूरा खोलिए" या नीचे Official Link से notice खोलिए।</p></div>';
+  }
   var h='<article class="card"><div class="row"><span class="b">'+esc(TYPES[p.type]||"Notice")+'</span>'+(isNew?'<span class="b new">NEW</span>':"")+(dl!==null&&dl>=0?'<span class="b dl">अंतिम तिथि '+esc(fmt(p.deadline))+'</span>':"")+'</div>'
    +(p.uni?'<span class="un">'+esc(p.uni)+'</span>':"")
    +'<h1>'+esc(p.title)+'</h1><div class="meta">'+(p.date?esc(fmt(p.date)):"")+'</div>'
    +(dl!==null&&dl>=0?'<div class="cnt'+(dl>5?" ok":"")+'">⏰ अंतिम तिथि में <b>'+(dl===0?"आज आख़िरी दिन है":dl+" दिन बाकी हैं")+'</b></div>':"")
    +(p.desc?'<p class="desc">'+esc(p.desc)+'</p>':"")
+   +pvh
    +'<div class="ad" id="ad-top"><small>विज्ञापन</small></div>'
    +'<div class="act">'
-   +(u?'<a class="btn pri" id="open" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Notice खोलिए (Official Link)</a>':'<div class="cnt">इस notice का सीधा link उपलब्ध नहीं है। कृपया University की official website देखिए।</div>')
-   +'<div class="two"><a class="btn" id="wa" target="_blank" rel="noopener noreferrer" href="#">WhatsApp पर शेयर</a><button class="btn" id="cp" type="button">Link कॉपी</button></div>'
+   +(u?'<a class="btn pri" id="open" target="_blank" rel="noopener noreferrer" href="'+esc(u)+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>Notice खोलिए (Official Link)</a>':'<div class="cnt">इस notice का सीधा link उपलब्ध नहीं है। कृपया University/College की official website देखिए।</div>')
    +'</div>'
+   +'<hr class="dv"><p class="hd2">दोस्तों को शेयर कीजिए</p><div class="sh">'
+   +sb("wa","WhatsApp",{id:"s-wa",href:"#"})+sb("tg","Telegram",{id:"s-tg",href:"#"})+sb("ig","Instagram",{id:"s-ig"})
+   +sb("fb","Facebook",{id:"s-fb",href:"#"})+sb("x","X",{id:"s-x",href:"#"})+sb("cp","Link कॉपी",{id:"cp"})+'</div>'
+   +(navigator.share?'<button class="btn mt" id="s-sys" type="button" style="width:100%"><svg viewBox="0 0 24 24" aria-hidden="true">'+IC.sh+'</svg>और ऐप्स में शेयर करें</button>':"")
    +'<p class="note">यह Notice University/College की official website से ली गई है। किसी भी फ़ैसले से पहले official site पर मिलान ज़रूर कर लें।</p></article>'
    +'<div class="ad" id="ad-bot"><small>विज्ञापन</small></div>'
    +'<div id="relw"></div>'
    +'<h2>और Updates के लिए जुड़िए</h2><div class="two"><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.tg+'">Telegram Channel</a><a class="btn" target="_blank" rel="noopener noreferrer" href="'+CFG.wa+'">WhatsApp Channel</a></div>';
   show(h);
-  var here=location.href;
-  $("wa").href="https://wa.me/?text="+encodeURIComponent(p.title+"\n"+here+"\n— University Gyaan");
-  $("cp").onclick=function(){var b=$("cp");(navigator.clipboard?navigator.clipboard.writeText(here):Promise.reject()).then(function(){b.textContent="✅ कॉपी हो गया"}).catch(function(){prompt("Link कॉपी कीजिए:",here)})};
+  var here=location.href,head=(p.uni?p.uni+": ":"")+p.title,plain=head+"\n"+here;
+  $("s-wa").href="https://wa.me/?text="+encodeURIComponent("*"+head+"*\n"+here+"\n\nUniversity Gyaan");
+  $("s-tg").href="https://t.me/share/url?url="+encodeURIComponent(here)+"&text="+encodeURIComponent(head);
+  $("s-fb").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(here);
+  $("s-x").href="https://twitter.com/intent/tweet?text="+encodeURIComponent(head)+"&url="+encodeURIComponent(here);
+  $("cp").onclick=function(){copyText(here).then(function(ok){toast(ok?"Link कॉपी हो गया":"कॉपी नहीं हो सका")})};
+  $("s-ig").onclick=function(){
+    if(navigator.share){navigator.share({title:head,text:head,url:here}).catch(function(){});return}
+    copyText(plain).then(function(ok){toast(ok?"Link कॉपी हो गया। Instagram में चिपकाइए।":"Link कॉपी नहीं हो सका");if(ok)setTimeout(function(){window.open("https://www.instagram.com/","_blank","noopener")},900)})};
+  var sy=$("s-sys");if(sy)sy.onclick=function(){navigator.share({title:head,text:head,url:here}).catch(function(){})};
   adBox($("ad-top"),CFG.slots.top);adBox($("ad-bot"),CFG.slots.bot);
   related(p,raw,mp);
 }
