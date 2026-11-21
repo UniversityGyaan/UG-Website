@@ -97,6 +97,18 @@
 <footer>
   <div><a href="../">Home</a><a href="../notices.html">Updates</a><a href="./">Guides</a><a href="../about.html">About</a><a href="../contact.html">Contact</a><a href="../privacy.html">Privacy Policy</a><a href="../terms.html">Terms</a><a href="../disclaimer.html">Disclaimer</a><a href="../editorial-policy.html">Editorial Policy</a></div>
   <p style="margin:6px 0 0">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
+<p class="copy" id="ugc" style="margin-top:6px"></p>
+<script>
+(function(){var D="https://university-notice-bot-default-rtdb.asia-southeast1.firebasedatabase.app/stats/",e=document.getElementById("ugc");if(!e)return;
+function inc(k){return fetch(D+k+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:'{".sv":{"increment":1}}'}).catch(function(){})}
+function fmt(n){try{return Number(n).toLocaleString("en-IN")}catch(x){return n}}
+var jobs=[];
+try{if(!localStorage.getItem("ug_v")){localStorage.setItem("ug_v","1");jobs.push(inc("visitors"))}}catch(x){}
+try{if(!sessionStorage.getItem("ug_s")){sessionStorage.setItem("ug_s","1");jobs.push(inc("views"))}}catch(x){}
+Promise.all(jobs).then(function(){return fetch(D+".json")}).then(function(r){return r.json()}).then(function(s){
+if(s&&s.visitors){e.textContent="Total Visitors: "+fmt(s.visitors)+(s.views?"  |  Total Visits: "+fmt(s.views):"")}}).catch(function(){});
+})();
+</script>
 </footer>
 <script src="guide.js"></script>
 </body>

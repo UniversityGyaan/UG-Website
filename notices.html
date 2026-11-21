@@ -202,6 +202,18 @@ select,input[type=search]{box-shadow:inset 0 2px 5px rgba(20,40,90,.14);border:1
 <footer>
   <div><a href="./">Home</a><a href="guides/">Guides</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a><a href="editorial-policy.html">Editorial Policy</a></div>
   <p>Notices official university/college websites से ली जाती हैं। सही जानकारी के लिए official site ज़रूर देखें।<br>© 2026 University Gyaan (by Sanjeev Chauhan) · Hapur</p>
+<p class="copy" id="ugc" style="margin-top:6px"></p>
+<script>
+(function(){var D="https://university-notice-bot-default-rtdb.asia-southeast1.firebasedatabase.app/stats/",e=document.getElementById("ugc");if(!e)return;
+function inc(k){return fetch(D+k+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:'{".sv":{"increment":1}}'}).catch(function(){})}
+function fmt(n){try{return Number(n).toLocaleString("en-IN")}catch(x){return n}}
+var jobs=[];
+try{if(!localStorage.getItem("ug_v")){localStorage.setItem("ug_v","1");jobs.push(inc("visitors"))}}catch(x){}
+try{if(!sessionStorage.getItem("ug_s")){sessionStorage.setItem("ug_s","1");jobs.push(inc("views"))}}catch(x){}
+Promise.all(jobs).then(function(){return fetch(D+".json")}).then(function(r){return r.json()}).then(function(s){
+if(s&&s.visitors){e.textContent="Total Visitors: "+fmt(s.visitors)+(s.views?"  |  Total Visits: "+fmt(s.views):"")}}).catch(function(){});
+})();
+</script>
 </footer>
 
 <div class="md" id="md" hidden><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mt">
