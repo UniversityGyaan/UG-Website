@@ -1,7 +1,7 @@
 /* Leftout Viva 2026 - is file ko edit karke page badal sakte hain.
    Date: YYYY-MM-DD. Page me ?edit=1 lagakar editor se bhi bana sakte hain. */
 window.LEFTOUT = {
- "updated": "2026-11-19",
+ "updated": "2026-11-22",
  "universities": [
   {
    "id": "ccsu",
@@ -412,6 +412,38 @@ window.LEFTOUT = {
        "time": "",
        "centre": "Kisan Institute of Information Technology, Meerut",
        "url": "https://cdn.ccsuniversity.ac.in/public/pdf/2026/11/Final%20Leftout%20Practical%20Course%20Wise%20Letter-2.pdf"
+      }
+     ]
+    },
+    {
+     "title": "MMH College Ghaziabad",
+     "rows": [
+      {
+       "cls": "Left Out Exam 2026 (Practical / Viva)",
+       "subject": "Philosophy",
+       "date": "2026-11-30",
+       "dateNote": "",
+       "time": "10:00 am",
+       "centre": "MMH College Ghaziabad – Philosophy Department",
+       "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
+      },
+      {
+       "cls": "Left Out Exam 2026 (Practical / Viva)",
+       "subject": "Physical Education",
+       "date": "2026-11-30",
+       "dateNote": "",
+       "time": "10:00 am",
+       "centre": "MMH College Ghaziabad – Physical Education Department",
+       "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
+      },
+      {
+       "cls": "Left Out Exam 2026 (Practical / Viva)",
+       "subject": "Library Science",
+       "date": "2026-11-30",
+       "dateNote": "",
+       "time": "10:00 am",
+       "centre": "MMH College Ghaziabad – Library Department",
+       "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
       }
      ]
     }
