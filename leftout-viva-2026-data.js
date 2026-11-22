@@ -424,7 +424,7 @@ window.LEFTOUT = {
        "date": "2026-11-30",
        "dateNote": "",
        "time": "10:00 am",
-       "centre": "MMH College Ghaziabad – Philosophy Department",
+       "centre": "MMH College Ghaziabad",
        "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
       },
       {
@@ -433,7 +433,7 @@ window.LEFTOUT = {
        "date": "2026-11-30",
        "dateNote": "",
        "time": "10:00 am",
-       "centre": "MMH College Ghaziabad – Physical Education Department",
+       "centre": "MMH College Ghaziabad",
        "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
       },
       {
@@ -442,7 +442,7 @@ window.LEFTOUT = {
        "date": "2026-11-30",
        "dateNote": "",
        "time": "10:00 am",
-       "centre": "MMH College Ghaziabad – Library Department",
+       "centre": "MMH College Ghaziabad",
        "url": "https://universitygyaan.in/leftout-notices/mmh-ghaziabad-30-nov-2026.jpg"
       }
      ]

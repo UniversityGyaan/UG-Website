@@ -115,6 +115,29 @@ h2 svg{width:20px;height:20px;color:var(--acct)}
 .go.off{background:none;border:1px dashed var(--bd);color:var(--mu);font-weight:600;font-size:12px}
 .bdg{display:inline-block;font-size:11px;font-weight:800;padding:1px 8px;border-radius:99px;background:var(--card2);border:1px solid var(--bd);color:var(--mu);white-space:nowrap}
 .bdg.today{background:var(--grn);border-color:var(--grn);color:#04251a}.bdg.soon{background:var(--acc);border-color:var(--acc);color:#1b1500}.bdg.rev{background:var(--red);border-color:var(--red);color:#fff}
+
+/* college blocks: one block per college inside a day, subjects listed under their class */
+.cgrid{display:grid;gap:12px;grid-template-columns:1fr;align-items:start}
+@media(min-width:760px){.cgrid{grid-template-columns:1fr 1fr}}
+.cb{--cc:#2c59f0;background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;box-shadow:var(--sh)}
+.cb.past{opacity:.6}
+.cb[data-c="0"]{--cc:#3b6bff}.cb[data-c="1"]{--cc:#0f9d6b}.cb[data-c="2"]{--cc:#d9822b}.cb[data-c="3"]{--cc:#9b5de5}.cb[data-c="4"]{--cc:#e0446a}.cb[data-c="5"]{--cc:#0ea5b7}
+.cbh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:10px 12px;background:linear-gradient(90deg,color-mix(in srgb,var(--cc) 20%,var(--card)),var(--card));border-bottom:1px solid var(--bd);border-left:4px solid var(--cc)}
+.cbn{flex:1 1 150px;min-width:0;font-weight:800;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.cbn i{font-style:normal;color:var(--cc)}
+.cbt{font-size:12.5px;font-weight:700;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:99px;padding:1px 9px;white-space:nowrap}
+.cbc{font-size:11.5px;font-weight:700;color:var(--mu);white-space:nowrap}
+.cl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 12px 5px;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--cc);border-top:1px solid var(--bd);background:color-mix(in srgb,var(--cc) 6%,transparent)}
+.cbh+.cl{border-top:0}
+.cl span.t{color:var(--mu);font-weight:700;letter-spacing:0}
+.rw{display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:1px dashed var(--bd)}
+.cl+.rw,.cbh+.rw{border-top:0}
+.rw .rb{flex:1;min-width:0}
+.rw .rs{display:block;font-weight:700;font-size:14.5px;line-height:1.35;overflow-wrap:anywhere}
+.rw .rm{display:flex;flex-wrap:wrap;gap:2px 8px;margin-top:2px;font-size:12px;color:var(--mu);line-height:1.4}
+.rw .rm b{color:var(--tx);font-weight:700}
+.rw .go{padding:7px 11px;font-size:12.5px;border-radius:9px}
+.rw .go.off{padding:6px 9px}
 details.pd{margin-top:18px}details.pd>summary{cursor:pointer;font-weight:700;font-size:14px;padding:10px 13px;border-radius:12px;border:1px solid var(--bd);background:var(--card)}
 .empty{padding:24px 14px;text-align:center;color:var(--mu);border:1px dashed var(--bd);border-radius:14px;margin-top:12px;font-size:14px}
 .err{margin:12px 0;padding:12px;border-radius:12px;border:1px solid var(--red);color:var(--red);font-size:13.5px}
@@ -196,7 +219,7 @@ footer a{margin:0 7px;color:var(--mu);text-decoration:none;line-height:2.2}foote
   <p style="margin:6px 0 0">© <span id="yr">2026</span> University Gyaan (by Sanjeev Chauhan). All Rights Reserved.</p>
 </footer>
 
-<script src="leftout-viva-2026-data.js?v=20261122a"></script>
+<script src="leftout-viva-2026-data.js?v=20261122b"></script>
 <script>
 (function(){
 "use strict";
@@ -271,13 +294,48 @@ function card(r,showDate){
   return c;
 }
 function byDate(a,b){return (a.date||"9999")<(b.date||"9999")?-1:(a.date||"9999")>(b.date||"9999")?1:0}
-function groupBlock(box,rows,keyFn,headFn,showDate){
+function groupBlock(box,rows,keyFn,headFn,past){
   var g={},keys=[];rows.forEach(function(r){var k=keyFn(r);if(!g[k]){g[k]=[];keys.push(k)}g[k].push(r)});
   keys.forEach(function(k){
     var h=headFn(k),hd=el("div",{cls:"gh"},[el("b",{text:h.text})]);
     if(h.badge)hd.insertBefore(el("span",{cls:"bdg "+h.badge.c,text:h.badge.t}),null);
     hd.insertBefore(el("span",{cls:"bdg",text:g[k].length+" परीक्षा"}),null);
-    box.appendChild(hd);var gr=el("div",{cls:"grid"});g[k].forEach(function(r){gr.appendChild(card(r,showDate))});box.appendChild(gr)});
+    box.appendChild(hd);blocks(box,g[k],past);
+  });
+}
+
+function hashC(t){var h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))>>>0;return h%6}
+function sameT(rows){var t={},n=0,v="";rows.forEach(function(r){var x=(r.time||"").trim().toLowerCase();if(x&&!t[x]){t[x]=1;n++;v=r.time.trim()}});return n===1&&rows.every(function(r){return (r.time||"").trim()})?v:""}
+function goBtn(r){var u=safeUrl(r.url),a=el(u?"a":"span",u?{cls:"go",href:u,target:"_blank",rel:"noopener noreferrer"}:{cls:"go off"},[u?"Notice":"Notice नहीं"]);
+  if(u){a.insertAdjacentHTML("beforeend",ARW);a.setAttribute("aria-label",(r.subject||r.cls||"")+" का Notice खोलिए")}return a}
+function rowEl(r,common,mode){
+  var main=r.subject||r.cls||"",rb=el("div",{cls:"rb"},[el("span",{cls:"rs",text:main})]),m=el("div",{cls:"rm"});
+  if(mode==="centre"&&r.subject&&r.cls)m.appendChild(el("span",{text:r.cls}));
+  if(r.time&&!common)m.appendChild(el("span",{},["🕙 ",el("b",{text:r.time})]));
+  if(r.dateNote)m.appendChild(el("span",{cls:"bdg rev",text:r.dateNote}));
+  if(m.childNodes.length)rb.appendChild(m);
+  return el("div",{cls:"rw"},[rb,goBtn(r)]);
+}
+function block(name,rows,mode,past){
+  var b=el("section",{cls:"cb"+(past?" past":""),"data-c":String(hashC(name))}),common=sameT(rows);
+  var h=el("div",{cls:"cbh"},[el("div",{cls:"cbn"},[el("i",{text:"📍 "}),name]),el("span",{cls:"cbc",text:rows.length+" परीक्षा"})]);
+  if(common&&mode==="date")h.appendChild(el("span",{cls:"cbt",text:"🕙 "+common}));
+  b.appendChild(h);
+  var g={},keys=[];rows.forEach(function(r){var k=mode==="date"?(r.cls||""):(r.date||"—");if(!g[k]){g[k]=[];keys.push(k)}g[k].push(r)});
+  keys.forEach(function(k){
+    var showHead=mode==="date"?(k&&g[k].some(function(r){return r.subject})):true;
+    if(showHead){
+      var lab=mode==="date"?(k||"अन्य"):dayMon(k==="—"?"":k),sub=[];
+      if(mode==="centre"){var st=status(k);if(st&&!st.past)sub.push(el("span",{cls:"bdg "+st.c,text:st.t}));var tt=sameT(g[k]);if(tt)sub.push(el("span",{cls:"t",text:"🕙 "+tt}))}
+      b.appendChild(el("div",{cls:"cl"},[el("span",{text:lab})].concat(sub)))}
+    var c2=mode==="date"?common:sameT(g[k]);
+    g[k].forEach(function(r){b.appendChild(rowEl(r,c2,mode))});
+  });
+  return b;
+}
+function blocks(box,rows,past){
+  var g={},keys=[];rows.forEach(function(r){var k=r.centre||"अन्य";if(!g[k]){g[k]=[];keys.push(k)}g[k].push(r)});
+  var gr=el("div",{cls:"cgrid"});keys.forEach(function(k){gr.appendChild(block(k,g[k],"date",past))});box.appendChild(gr);
 }
 function dayMon(s){var d=pd(s);return d?DAYS[d.getDay()]+", "+d.getDate()+" "+MON[d.getMonth()]:"तिथि जल्द"}
 function renderList(){
@@ -290,12 +348,12 @@ function renderList(){
   if(!rows.length){box.appendChild(el("div",{cls:"empty",text:"कोई परीक्षा नहीं मिली। खोज या फ़िल्टर बदलकर देखिए।"}));return}
   rows.sort(byDate);
   if(view==="centre"){
-    groupBlock(box,rows,function(r){return r.centre||"अन्य"},function(k){return{text:"📍 "+k}},true);
+    var cg=el("div",{cls:"cgrid"}),gg={},kk=[];rows.forEach(function(r){var k=r.centre||"अन्य";if(!gg[k]){gg[k]=[];kk.push(k)}gg[k].push(r)});kk.forEach(function(k){cg.appendChild(block(k,gg[k],"centre",false))});box.appendChild(cg);
   }else{
     var up=rows.filter(function(r){var n=daysTo(r.date);return n===null||n>=0}),past=rows.filter(function(r){var n=daysTo(r.date);return n!==null&&n<0});
     var hd=function(k){var s=status(k);return{text:dayMon(k==="—"?"":k),badge:s&&!s.past?s:null}};
     groupBlock(box,up,function(r){return r.date||"—"},hd,false);
-    if(past.length){var d=el("details",{cls:"pd"},[el("summary",{text:"✔️ हो चुकी परीक्षाएं ("+past.length+")"})]);var inner=el("div");groupBlock(inner,past,function(r){return r.date},hd,false);d.appendChild(inner);box.appendChild(d)}
+    if(past.length){var d=el("details",{cls:"pd"},[el("summary",{text:"✔️ हो चुकी परीक्षाएं ("+past.length+")"})]);var inner=el("div");groupBlock(inner,past,function(r){return r.date},hd,true);d.appendChild(inner);box.appendChild(d)}
   }
 }
 function renderVids(){
