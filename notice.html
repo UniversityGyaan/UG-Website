@@ -227,7 +227,7 @@ var tt;function toast(m){var e=$("toast");if(!e){e=document.createElement("div")
 function copyText(t){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).then(function(){return true}).catch(function(){var a=document.createElement("textarea");a.value=t;a.style.cssText="position:fixed;opacity:0";document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand("copy")}catch(e){}a.remove();return ok})}
 
 function render(p,raw,mp){
-  var u=fixU(p.url),dl=p.deadline?left(p.deadline):null,isNew=(Date.now()/1000-(p.ts||0))<172800;
+  var u=fixU(p.file_url||p.url),dl=p.deadline?left(p.deadline):null,isNew=(Date.now()/1000-(p.ts||0))<172800;
   document.title=p.title+" – University Gyaan";
   var md=document.querySelector('meta[name=description]');if(md)md.content=(p.uni?p.uni+": ":"")+p.title;
   var pv=u?preview(u):null,pvh="";
